@@ -207,10 +207,10 @@
     background: rgba(245,197,24,0.06);
   }
 
-  /* PHOTO GRID — masonry-like with CSS grid */
+  /* PHOTO GRID — 4 колонки */
   .photo-grid {
     display: grid;
-    grid-template-columns: repeat(12, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 12px;
   }
 
@@ -220,28 +220,22 @@
     border-radius: 4px;
     position: relative;
   }
-  .photo-item:nth-child(6n+1) { grid-column: span 5; }
-  .photo-item:nth-child(6n+2) { grid-column: span 4; }
-  .photo-item:nth-child(6n+3) { grid-column: span 3; }
-  .photo-item:nth-child(6n+4) { grid-column: span 3; }
-  .photo-item:nth-child(6n+5) { grid-column: span 5; }
-  .photo-item:nth-child(6n+6) { grid-column: span 4; }
 
   .photo-inner {
     width: 100%;
-    aspect-ratio: 4/3;
+    height: 180px;
     overflow: hidden;
     position: relative;
-    background: var(--surface2);
+    border-radius: 8px;
   }
-  .photo-item:nth-child(3n+1) .photo-inner { aspect-ratio: 3/2; }
-  .photo-item:nth-child(3n+2) .photo-inner { aspect-ratio: 4/3; }
-  .photo-item:nth-child(3n+3) .photo-inner { aspect-ratio: 1/1; }
+  .photo-item:nth-child(3n+1) .photo-inner { height: 180px; }
+  .photo-item:nth-child(3n+2) .photo-inner { height: 180px; }
+  .photo-item:nth-child(3n+3) .photo-inner { height: 180px; }
 
   .photo-inner img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     display: block;
     transition: transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94), filter 0.3s;
     filter: grayscale(20%) brightness(0.9);
@@ -251,23 +245,8 @@
     filter: grayscale(0%) brightness(1);
   }
 
-  .photo-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 50%);
-    opacity: 0;
-    transition: opacity 0.3s;
-    display: flex;
-    align-items: flex-end;
-    padding: 14px;
-  }
-  .photo-item:hover .photo-overlay { opacity: 1; }
-  .photo-overlay-title {
-    font-size: 12px;
-    font-weight: 500;
-    color: #fff;
-    letter-spacing: 0.02em;
-  }
+  .photo-overlay { display: none; }
+  .photo-overlay-title { display: none; }
 
   .photo-caption {
     padding: 8px 2px 0;
@@ -280,9 +259,11 @@
     font-size: 12px;
     font-weight: 400;
     color: var(--text2);
-    white-space: nowrap;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
     overflow: hidden;
-    text-overflow: ellipsis;
   }
   .caption-year {
     font-size: 11px;
@@ -321,18 +302,21 @@
 
   .lb-img-wrap {
     width: 100%;
-    max-height: 65vh;
-    overflow: hidden;
+    max-height: 75vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border-radius: 4px;
-    background: var(--surface2);
     position: relative;
   }
   .lb-img-wrap img {
-    width: 100%;
-    height: 100%;
-    max-height: 65vh;
-    object-fit: cover;
+    max-width: 100%;
+    max-height: 75vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
     display: block;
+    border-radius: 4px;
   }
 
   .lb-bar {
@@ -461,82 +445,114 @@
 </div>
 
 <script>
-const DATA = [
-  { year: 2004, event: 'Заснування', photos: [
-    { title: 'Перший день', desc: 'Відкриття факультету, вересень 2004', seed: 10 },
-    { title: 'Перші студенти', desc: 'Перша група, осінь 2004', seed: 20 },
-    { title: 'Аудиторія 101', desc: 'Перша лекція', seed: 30 },
-    { title: 'Команда засновників', desc: 'Декан та викладачі, 2004', seed: 40 },
-  ]},
-  { year: 2006, event: 'Перший випуск', photos: [
-    { title: 'Випускний вечір', desc: 'Перші 28 випускників, червень 2006', seed: 50 },
-    { title: 'Вручення дипломів', desc: 'Актова зала', seed: 60 },
-    { title: 'Студентське свято', desc: 'Після церемонії', seed: 70 },
-  ]},
-  { year: 2008, event: 'Розширення', photos: [
-    { title: 'Новий корпус', desc: 'Відкриття другого корпусу, 2008', seed: 80 },
-    { title: 'Наукова конференція', desc: 'Перша міжнародна, жовтень 2008', seed: 90 },
-    { title: 'Лабораторія', desc: 'Відкриття дослідницького центру', seed: 100 },
-    { title: 'Студентська рада', desc: 'Перші вибори, 2008', seed: 110 },
-    { title: 'Спортивний день', desc: 'Щорічні змагання', seed: 120 },
-  ]},
-  { year: 2011, event: 'Акредитація', photos: [
-    { title: 'Міжнародна акредитація', desc: 'Отримання сертифікату', seed: 130 },
-    { title: 'Партнери з Польщі', desc: 'Підписання угоди, Краків', seed: 140 },
-    { title: 'Відкрита лекція', desc: 'Запрошений професор з Берліна', seed: 150 },
-  ]},
-  { year: 2014, event: '10-річчя', photos: [
-    { title: 'Ювілей — 10 років', desc: 'Велике святкування, жовтень 2014', seed: 160 },
-    { title: 'Виставка досягнень', desc: 'Холл першого корпусу', seed: 170 },
-    { title: 'Олімпіада', desc: '1 місце в регіоні', seed: 180 },
-    { title: 'Капсула часу', desc: 'Закладено до 20-річчя', seed: 190 },
-    { title: 'Концерт', desc: 'Студентський оркестр', seed: 200 },
-    { title: 'Почесні гості', desc: 'Ректор університету та мер', seed: 210 },
-  ]},
-  { year: 2017, event: 'Нові програми', photos: [
-    { title: 'Запуск магістратури', desc: 'Нова програма, 2017', seed: 220 },
-    { title: 'Стажування в ЄС', desc: 'Перший обмін, Варшава', seed: 230 },
-    { title: 'Хакатон', desc: '72 год., 18 команд', seed: 240 },
-    { title: 'Гості з Японії', desc: 'Делегація університету Осака', seed: 250 },
-  ]},
-  { year: 2020, event: 'Адаптація', photos: [
-    { title: 'Онлайн-навчання', desc: 'Перехід на дистанційний формат', seed: 260 },
-    { title: 'Гібридні заняття', desc: 'Нова аудиторія з трансляцією', seed: 270 },
-    { title: 'Підтримка студентів', desc: 'Волонтерський центр, 2020', seed: 280 },
-  ]},
-  { year: 2022, event: 'Відновлення', photos: [
-    { title: 'Повернення до кампусу', desc: 'Відновлення офлайн-занять', seed: 290 },
-    { title: 'Випуск 2022', desc: 'Перша очна церемонія після перерви', seed: 300 },
-    { title: 'Нова лабораторія ШІ', desc: 'Відкриття центру AI, 2022', seed: 310 },
-    { title: 'Зустріч alumni', desc: 'Понад 200 випускників', seed: 320 },
-  ]},
-  { year: 2024, event: '20-річчя', photos: [
-    { title: 'Ювілейне відкриття', desc: 'Святкування 20 років, жовтень 2024', seed: 330 },
-    { title: 'Галерея пам\'яті', desc: 'Виставка в холі, осінь 2024', seed: 340 },
-    { title: 'Спільне фото', desc: 'Всі покоління разом', seed: 350 },
-    { title: 'Нова капсула часу', desc: 'Закладено до 30-річчя', seed: 360 },
-    { title: 'Почесні випускники', desc: 'Нагородження, 2024', seed: 370 },
-    { title: 'Концерт та банкет', desc: 'Фінальна урочиста частина', seed: 380 },
-  ]},
-];
+// ══ КОНФІГ GITHUB ══
+const REPO     = 'ftitntu/ftit20';
+const BRANCH   = 'main';
+const FOLDER   = 'Photo';
+const API_URL  = `https://api.github.com/repos/${REPO}/contents/${FOLDER}?ref=${BRANCH}`;
+const RAW_BASE = `https://raw.githubusercontent.com/${REPO}/${BRANCH}/${FOLDER}`;
 
-function imgUrl(seed, w, h) {
-  return `https://picsum.photos/seed/${seed}/${w}/${h}`;
-}
+// ── стан ──
+let DATA         = []; // [{ year, photos: [{ title, url }] }]
+let allPhotos    = [];
+let currentPhotos= [];
+let activeYear   = 'all';
+let lbIndex      = 0;
 
-let allPhotos = [];
-let currentPhotos = [];
-let activeYear = 'all';
-let lbIndex = 0;
-
-DATA.forEach(yr => {
-  yr.photos.forEach(ph => {
-    allPhotos.push({ ...ph, year: yr.year, event: yr.event });
-  });
+// ── прогрес + nav ──
+const prog = document.getElementById('prog');
+const galNav = document.getElementById('gal-nav');
+window.addEventListener('scroll', () => {
+  const h = document.documentElement;
+  prog.style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight) * 100) + '%';
+  const s = window.scrollY > 60;
+  galNav.style.background      = s ? 'rgba(6,14,31,0.92)' : 'rgba(6,14,31,0.0)';
+  galNav.style.backdropFilter  = s ? 'blur(16px)'         : 'blur(0px)';
+  galNav.style.borderBottom    = s ? '1px solid rgba(41,170,255,0.15)' : 'none';
 });
 
-document.getElementById('total-count').textContent = allPhotos.length;
-document.getElementById('footer-count').textContent = allPhotos.length + ' фотографій · ' + DATA.length + ' епох';
+// ── завантаження з GitHub ──
+async function load() {
+  showLoading();
+  try {
+    const res = await fetch(API_URL);
+    if (!res.ok) throw new Error(`GitHub API: ${res.status}`);
+    const files = await res.json();
+
+    // беремо лише зображення
+    const imgs = files.filter(f =>
+      /\.(jpg|jpeg|png|webp|gif)$/i.test(f.name)
+    );
+
+    if (!imgs.length) {
+      showEmpty();
+      return;
+    }
+
+    // групуємо по роках з назви файлу "2005_Назва.jpg"
+    const groups = {};
+    imgs.forEach(f => {
+      const match = f.name.match(/^(\d{4})[_\s-]/);
+      const year  = match ? parseInt(match[1]) : 0;
+      const title = f.name
+        .replace(/^\d{4}[_\s-]/, '')   // прибираємо рік
+        .replace(/\.[^.]+$/, '')        // прибираємо розширення
+        .trim();
+
+      if (!groups[year]) groups[year] = [];
+      groups[year].push({
+        title,
+        url: `${RAW_BASE}/${encodeURIComponent(f.name)}`
+      });
+    });
+
+    // сортуємо роки
+    DATA = Object.keys(groups)
+      .map(y => ({
+        year: parseInt(y),
+        photos: groups[y].sort(() => Math.random() - 0.5) // перемішуємо
+      }))
+      .sort((a, b) => a.year - b.year);
+
+    // будуємо allPhotos
+    allPhotos = [];
+    DATA.forEach(yr => yr.photos.forEach(ph => allPhotos.push({ ...ph, year: yr.year })));
+
+    document.getElementById('total-count').textContent = allPhotos.length;
+    document.getElementById('footer-count').textContent =
+      allPhotos.length + ' фотографій · ' + DATA.length + ' років';
+
+    render();
+
+  } catch (e) {
+    showError(e.message);
+  }
+}
+
+function showLoading() {
+  document.getElementById('timeline').innerHTML = `
+    <div style="text-align:center;padding:5rem 2rem;display:flex;flex-direction:column;align-items:center;gap:1rem;">
+      <div style="width:36px;height:36px;border-radius:50%;border:2px solid rgba(41,170,255,.15);border-top-color:#29aaff;animation:spin .8s linear infinite;"></div>
+      <div style="font-family:'Unbounded',sans-serif;font-size:.85rem;color:#fff;">Завантаження фото...</div>
+      <div style="font-size:.78rem;color:#94a3b8;">Отримуємо фото з GitHub</div>
+    </div>`;
+}
+function showEmpty() {
+  document.getElementById('timeline').innerHTML = `
+    <div style="text-align:center;padding:5rem 2rem;">
+      <div style="font-size:2.5rem;margin-bottom:1rem;">🖼</div>
+      <div style="font-family:'Unbounded',sans-serif;font-size:.85rem;color:#fff;margin-bottom:.5rem;">Фото поки немає</div>
+      <div style="font-size:.78rem;color:#94a3b8;">Додай фото у папку Photo/ на GitHub у форматі Рік_Назва.jpg</div>
+    </div>`;
+}
+function showError(msg) {
+  document.getElementById('timeline').innerHTML = `
+    <div style="text-align:center;padding:5rem 2rem;">
+      <div style="font-size:2.5rem;margin-bottom:1rem;">⚠️</div>
+      <div style="font-family:'Unbounded',sans-serif;font-size:.85rem;color:#fff;margin-bottom:.5rem;">Не вдалося завантажити</div>
+      <div style="font-size:.78rem;color:#94a3b8;">${msg}</div>
+    </div>`;
+}
 
 function buildNav() {
   const nav = document.getElementById('year-nav');
@@ -545,22 +561,7 @@ function buildNav() {
   const allBtn = document.createElement('button');
   allBtn.className = 'year-btn' + (activeYear === 'all' ? ' active' : '');
   allBtn.textContent = 'Всі роки';
-  allBtn.onclick = () => { activeYear = 'all'; render();
-
-// Progress bar
-const prog = document.getElementById("prog");
-window.addEventListener("scroll", () => {
-  const h = document.documentElement;
-  prog.style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight) * 100) + "%";
-});
-// Nav scroll style
-const galNav = document.getElementById("gal-nav");
-window.addEventListener("scroll", () => {
-  const s = window.scrollY > 60;
-  galNav.style.background = s ? "rgba(6,14,31,0.92)" : "rgba(6,14,31,0.0)";
-  galNav.style.backdropFilter = s ? "blur(16px)" : "blur(0px)";
-  galNav.style.borderBottom = s ? "1px solid rgba(41,170,255,0.15)" : "none";
-}); scrollNav(allBtn); };
+  allBtn.onclick = () => { activeYear = 'all'; render(); scrollNav(allBtn); };
   nav.appendChild(allBtn);
 
   DATA.forEach(yr => {
@@ -568,22 +569,7 @@ window.addEventListener("scroll", () => {
     btn.className = 'year-btn' + (activeYear === yr.year ? ' active' : '');
     btn.textContent = yr.year;
     btn.dataset.year = yr.year;
-    btn.onclick = () => { activeYear = yr.year; render();
-
-// Progress bar
-const prog = document.getElementById("prog");
-window.addEventListener("scroll", () => {
-  const h = document.documentElement;
-  prog.style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight) * 100) + "%";
-});
-// Nav scroll style
-const galNav = document.getElementById("gal-nav");
-window.addEventListener("scroll", () => {
-  const s = window.scrollY > 60;
-  galNav.style.background = s ? "rgba(6,14,31,0.92)" : "rgba(6,14,31,0.0)";
-  galNav.style.backdropFilter = s ? "blur(16px)" : "blur(0px)";
-  galNav.style.borderBottom = s ? "1px solid rgba(41,170,255,0.15)" : "none";
-}); scrollNav(btn); };
+    btn.onclick = () => { activeYear = yr.year; render(); scrollNav(btn); };
     nav.appendChild(btn);
   });
 }
@@ -608,9 +594,9 @@ function render() {
 
     block.innerHTML = `
       <div class="year-header">
-        <div class="year-number">${yr.year}</div>
+        <div class="year-number">${yr.year || 'Рік невідомий'}</div>
         <div class="year-divider"></div>
-        <div class="year-event-tag">${yr.event}</div>
+        <div class="year-event-tag">${yr.photos.length} фото</div>
       </div>
     `;
 
@@ -621,14 +607,11 @@ function render() {
       const globalIdx = currentPhotos.length;
       currentPhotos.push({ ...ph, year: yr.year });
 
-      const sizes = [[800,600],[700,525],[600,600],[750,563],[680,510],[720,540]];
-      const sz = sizes[(pi + yi) % sizes.length];
-
       const item = document.createElement('div');
       item.className = 'photo-item';
       item.innerHTML = `
         <div class="photo-inner">
-          <img src="${imgUrl(ph.seed, sz[0], sz[1])}" alt="${ph.title}" loading="lazy">
+          <img src="${ph.url}" alt="${ph.title}" loading="lazy">
           <div class="photo-overlay">
             <span class="photo-overlay-title">${ph.title}</span>
           </div>
@@ -647,25 +630,24 @@ function render() {
   });
 }
 
+// ── лайтбокс ──
 function openLb(idx) {
   lbIndex = idx;
   updateLb();
   document.getElementById('lightbox').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
-
 function closeLb() {
   document.getElementById('lightbox').classList.remove('open');
   document.body.style.overflow = '';
 }
-
 function updateLb() {
   const ph = currentPhotos[lbIndex];
   const img = document.getElementById('lb-img');
-  img.src = imgUrl(ph.seed, 1200, 800);
+  img.src = ph.url;
   img.alt = ph.title;
   document.getElementById('lb-title').textContent = ph.title;
-  document.getElementById('lb-sub').textContent = ph.desc + ' · ' + ph.year;
+  document.getElementById('lb-sub').textContent = ph.year;
   document.getElementById('lb-counter').textContent = (lbIndex + 1) + ' / ' + currentPhotos.length;
   document.getElementById('lb-prev').disabled = lbIndex === 0;
   document.getElementById('lb-next').disabled = lbIndex === currentPhotos.length - 1;
@@ -674,34 +656,15 @@ function updateLb() {
 document.getElementById('lb-close').onclick = closeLb;
 document.getElementById('lb-prev').onclick = () => { if (lbIndex > 0) { lbIndex--; updateLb(); } };
 document.getElementById('lb-next').onclick = () => { if (lbIndex < currentPhotos.length - 1) { lbIndex++; updateLb(); } };
-
-document.getElementById('lightbox').onclick = (e) => {
-  if (e.target === document.getElementById('lightbox')) closeLb();
-};
-
-document.addEventListener('keydown', (e) => {
+document.getElementById('lightbox').onclick = e => { if (e.target === document.getElementById('lightbox')) closeLb(); };
+document.addEventListener('keydown', e => {
   if (!document.getElementById('lightbox').classList.contains('open')) return;
   if (e.key === 'Escape') closeLb();
-  if (e.key === 'ArrowLeft' && lbIndex > 0) { lbIndex--; updateLb(); }
-  if (e.key === 'ArrowRight' && lbIndex < currentPhotos.length - 1) { lbIndex++; updateLb(); }
+  if (e.key === 'ArrowLeft'  && lbIndex > 0)                          { lbIndex--; updateLb(); }
+  if (e.key === 'ArrowRight' && lbIndex < currentPhotos.length - 1)   { lbIndex++; updateLb(); }
 });
 
-render();
-
-// Progress bar
-const prog = document.getElementById("prog");
-window.addEventListener("scroll", () => {
-  const h = document.documentElement;
-  prog.style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight) * 100) + "%";
-});
-// Nav scroll style
-const galNav = document.getElementById("gal-nav");
-window.addEventListener("scroll", () => {
-  const s = window.scrollY > 60;
-  galNav.style.background = s ? "rgba(6,14,31,0.92)" : "rgba(6,14,31,0.0)";
-  galNav.style.backdropFilter = s ? "blur(16px)" : "blur(0px)";
-  galNav.style.borderBottom = s ? "1px solid rgba(41,170,255,0.15)" : "none";
-});
+load();
 </script>
 </body>
 </html>
