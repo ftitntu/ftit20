@@ -265,6 +265,18 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
+
+  @media(max-width: 640px){
+    .photo-grid{
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+    .photo-inner{height: 150px !important;}
+    .caption-title{
+      font-size: 11px;
+      -webkit-line-clamp: 3;
+    }
+  }
   .caption-year {
     font-size: 11px;
     color: var(--text3);
