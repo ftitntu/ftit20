@@ -8,20 +8,20 @@
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;700;900&family=Geologica:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --deep:     #060e1f;
-  --navy:     #0d1b3e;
-  --navy-mid: #162650;
+  --deep:     #0a0f1a;
+  --navy:     #111827;
+  --navy-mid: #1e293b;
   --blue:     #1e40af;
   --electric: #29aaff;
   --sky:      #7dd4fc;
   --yellow:   #f5c518;
   --yellow-d: #c49a0a;
-  --white:    #ffffff;
-  --muted:    #94a3b8;
-  --border:   rgba(41,170,255,0.15);
-  --gold:     rgba(245,197,24,0.7);
-  --gold-dim: rgba(245,197,24,0.15);
-  --gold-border: rgba(245,197,24,0.25);
+  --white:    #e2e8f0;
+  --muted:    #475569;
+  --border:   rgba(100,116,139,0.2);
+  --gold:     #64748b;
+  --gold-dim: rgba(100,116,139,0.08);
+  --gold-border: rgba(100,116,139,0.2);
 }
 
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
@@ -43,7 +43,7 @@ body::after{
 
 #prog{
   position:fixed;top:0;left:0;height:2px;width:0%;
-  background:linear-gradient(90deg,var(--blue),var(--electric),var(--yellow));
+  background:linear-gradient(90deg,#1e293b,#64748b,#1e293b);
   z-index:10000;transition:width .1s linear;
 }
 
@@ -52,17 +52,17 @@ nav{
   position:fixed;top:0;left:0;right:0;z-index:1000;
   display:flex;align-items:center;justify-content:space-between;
   padding:1.2rem 3rem;
-  background:#101E40;
-  border-bottom:1px solid rgba(255,255,255,.06);
+  background:#080c14;
+  border-bottom:1px solid rgba(100,116,139,.1);
   transition:border-color .3s;
 }
 nav.scrolled{
-  border-bottom:1px solid rgba(41,170,255,.12);
+  border-bottom:1px solid rgba(100,116,139,.2);
 }
 .nav-logo{
   font-family:'Unbounded',sans-serif;
   font-size:.75rem;font-weight:700;
-  letter-spacing:.15em;color:var(--electric);
+  letter-spacing:.15em;color:#64748b;
   text-decoration:none;
   display:flex;align-items:center;gap:.6rem;
 }
@@ -94,16 +94,12 @@ nav.scrolled{
 .hero-grid{
   position:absolute;inset:0;
   background-image:
-    linear-gradient(rgba(245,197,24,.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(245,197,24,.03) 1px, transparent 1px);
+    linear-gradient(rgba(100,116,139,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(100,116,139,.04) 1px, transparent 1px);
   background-size:60px 60px;
   mask-image:radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 100%);
 }
-.hero-orb{
-  position:absolute;width:500px;height:500px;border-radius:50%;
-  background:radial-gradient(circle, rgba(245,197,24,.06) 0%, rgba(245,197,24,.02) 45%, transparent 70%);
-  pointer-events:none;
-}
+.hero-orb{display:none;}
 .hero-inner{position:relative;}
 
 .hero-tag{
@@ -134,7 +130,7 @@ nav.scrolled{
   animation:fadeUp 1s ease .15s both;
 }
 .hero-title em{
-  color:var(--yellow);font-style:normal;
+  color:#93c5fd;font-style:normal;
 }
 
 .hero-line{
@@ -196,11 +192,7 @@ section{padding:5rem 2rem;}
   content:'';position:absolute;top:0;left:0;right:0;height:2px;
   background:linear-gradient(90deg,transparent,rgba(245,197,24,.55),transparent);
 }
-.hero-card::after{
-  content:'';position:absolute;inset:0;
-  background:radial-gradient(ellipse at 50% 0%, rgba(245,197,24,.04), transparent 70%);
-  pointer-events:none;
-}
+.hero-card::after{display:none;}
 
 .hero-avatar{
   width:60px;height:60px;border-radius:50%;
@@ -307,11 +299,6 @@ section{padding:5rem 2rem;}
 
 <nav id="nav">
   <a href="index.html" class="nav-logo">ФТІТ · НТУ</a>
-  <ul class="nav-links">
-    <li><a href="index.html#about">Про факультет</a></li>
-    <li><a href="index.html#gallery">Галерея</a></li>
-    <li><a href="index.html#greetings">Привітання</a></li>
-  </ul>
   <a href="index.html" class="nav-back">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
     На головну
