@@ -329,7 +329,7 @@ async function load() {
 
 ALL = (Array.isArray(data) ? data : [])
   .filter(g => g.name && g.year && g.text)
-  .sort((a, b) => b.year - a.year);
+  .sort(() => Math.random() - 0.5);
 
     if (!ALL.length) {
       return showState('💬', 'Привітань поки немає',
