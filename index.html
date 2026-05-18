@@ -549,6 +549,60 @@ section{padding:7rem 2rem;}
 }
 
 /* ══ FOOTER ══ */
+/* ══ HEROES MEMORIAL BLOCK ══ */
+.heroes-block{
+  background:var(--deep);
+  border-top:1px solid rgba(245,197,24,.12);
+  border-bottom:1px solid rgba(245,197,24,.12);
+  padding:5rem 2rem;
+  position:relative;overflow:hidden;
+}
+.heroes-block::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 0%, rgba(245,197,24,.04), transparent 65%);
+  pointer-events:none;
+}
+.heroes-block-inner{
+  max-width:1100px;margin:0 auto;
+  display:grid;grid-template-columns:1fr auto;
+  gap:3rem;align-items:center;
+  position:relative;
+}
+.heroes-block-text .sec-tag{color:rgba(245,197,24,.8);}
+.heroes-block-text .sec-tag::before{background:rgba(245,197,24,.8);}
+.heroes-block-title{
+  font-family:'Unbounded',sans-serif;
+  font-size:clamp(1.6rem,3.5vw,2.5rem);
+  font-weight:700;line-height:1.15;
+  letter-spacing:-.02em;color:var(--white);
+  margin-bottom:.9rem;
+}
+.heroes-block-title em{color:var(--yellow);font-style:normal;}
+.heroes-block-desc{
+  font-size:.95rem;line-height:1.8;
+  color:var(--muted);max-width:480px;
+}
+.heroes-block-btn{
+  display:inline-flex;align-items:center;gap:.75rem;
+  font-family:'Unbounded',sans-serif;
+  font-size:.7rem;font-weight:400;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--deep);
+  background:linear-gradient(135deg,var(--yellow),var(--yellow-d));
+  padding:.9em 2.2em;border-radius:2em;
+  text-decoration:none;white-space:nowrap;
+  transition:transform .2s,box-shadow .2s;
+  box-shadow:0 0 30px rgba(245,197,24,.2);
+}
+.heroes-block-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 0 50px rgba(245,197,24,.35);
+}
+.heroes-block-btn svg{width:15px;height:15px;}
+@media(max-width:700px){
+  .heroes-block-inner{grid-template-columns:1fr;gap:2rem;}
+  .heroes-block-btn{width:100%;justify-content:center;}
+}
+
 footer{
   background:var(--deep);
   border-top:1px solid var(--border);
@@ -1297,6 +1351,24 @@ footer{
       </button>
     </div>
     <div class="photo-counter" id="photoCounter"></div>
+  </div>
+</div>
+
+<!-- HEROES MEMORIAL -->
+<div class="heroes-block">
+  <div class="heroes-block-inner reveal">
+    <div class="heroes-block-text">
+      <div class="sec-tag">Герої ФТІТ</div>
+      <h2 class="heroes-block-title">Вічна <em>пам'ять</em></h2>
+      <p class="heroes-block-desc">
+        Випускники і студенти факультету, які віддали своє життя,
+        захищаючи Україну. Ми пам'ятаємо кожного.
+      </p>
+    </div>
+    <a href="heroes.html" class="heroes-block-btn">
+      Пам'ятаємо
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+    </a>
   </div>
 </div>
 
