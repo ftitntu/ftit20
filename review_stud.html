@@ -185,6 +185,27 @@ nav.scrolled{border-bottom:1px solid rgba(41,170,255,.12);}
   width:2px;border-radius:1px;
   background:linear-gradient(to bottom,var(--electric),transparent);
 }
+.q-wrap{position:relative;}
+.q-wrap.collapsible .g-quote{
+  overflow:hidden;max-height:10.0em;
+  transition:max-height .4s ease;
+}
+.q-wrap.collapsible.expanded .g-quote{max-height:600px;}
+.q-fade{
+  position:absolute;bottom:0;left:0;right:0;height:2.8em;
+  background:linear-gradient(to bottom,transparent,var(--navy-mid));
+  pointer-events:none;transition:opacity .3s;
+}
+.q-wrap.collapsible.expanded .q-fade{opacity:0;}
+.q-btn{
+  margin-top:.6rem;background:none;border:none;cursor:pointer;
+  color:var(--electric);font-family:'Geologica',sans-serif;
+  font-size:.72rem;font-weight:500;padding:0;
+  display:flex;align-items:center;gap:.35rem;transition:opacity .2s;
+}
+.q-btn:hover{opacity:.7;}
+.q-btn svg{width:13px;height:13px;transition:transform .35s;}
+.q-btn.expanded svg{transform:rotate(180deg);}
 
 /* ══ STATES ══ */
 .state-box{
@@ -387,7 +408,10 @@ function render(list) {
   state.style.display = 'none';
   grid.style.display = 'block';
 
-  grid.innerHTML = list.map((g, i) => `
+  grid.innerHTML = list.map((g, i) => {
+    const long = g.text.length > 600;
+    const id = `q${i}`;
+    return `
     <div class="g-card" style="animation-delay:${i * 50}ms">
       <div class="g-card-top">
         <div class="g-avatar" style="background:${COLORS[i % COLORS.length]}">${initials(g.name)}</div>
@@ -398,9 +422,13 @@ function render(list) {
           ${g.position ? `<span class="g-position">${g.position}</span>` : ''}
         </div>
       </div>
-      <div class="g-quote">${g.text}</div>
-    </div>
-  `).join('');
+      <div class="q-wrap${long ? ' collapsible' : ''}" id="${id}">
+        <div class="g-quote">${g.text}</div>
+        ${long ? '<div class="q-fade"></div>' : ''}
+      </div>
+      ${long ? `<button class="q-btn" onclick="toggleQuote('${id}', this)">Читати далі<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>` : ''}
+    </div>`;
+  }).join('');
 
   document.getElementById('countLabel').textContent = `${list.length} привітань`;
 }
@@ -414,6 +442,13 @@ function showState(icon, title, sub) {
     <div class="state-title">${title}</div>
     <div class="state-sub">${sub}</div>
   `;
+}
+
+function toggleQuote(id, btn) {
+  const wrap = document.getElementById(id);
+  const exp = wrap.classList.toggle("expanded");
+  btn.classList.toggle("expanded", exp);
+  btn.childNodes[0].textContent = exp ? "Згорнути" : "Читати далі";
 }
 
 load();
