@@ -141,6 +141,8 @@
         "Кафедри факультету активно співпрацюють з багатьма ІТ-компаніями, зокрема «Microsoft в Україні», SoftServe, Sigma Software, EPAM, Global Logic та інші.",
         "Факультет бере активну участь у міжнародному науковому і навчальному співробітництві в рамках виконання міжнародних проектів за програмою ERASMUS+ КА2 та ERASMUS+ КА1."
       ],
-      "chips": ["ERASMUS+ KA1", "ERASMUS+ KA2", "Microsoft", "SoftServe", "EPAM", "GlobalLogic"]
-    }
+        "chips": ["ERASMUS+ KA1", "ERASMUS+ KA2", "Microsoft", "SoftServe", "EPAM", "GlobalLogic"]
+      }          // ← без коми після цього об'єкту
+    ]
+  ]
 }
