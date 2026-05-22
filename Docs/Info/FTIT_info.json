@@ -142,17 +142,6 @@
         "Факультет бере активну участь у міжнародному науковому і навчальному співробітництві в рамках виконання міжнародних проектів за програмою ERASMUS+ КА2 та ERASMUS+ КА1."
       ],
       "chips": ["ERASMUS+ KA1", "ERASMUS+ KA2", "Microsoft", "SoftServe", "EPAM", "GlobalLogic"]
-    },
-    {
-      "id": "contacts",
-      "tag": "Контакти",
-      "title": "Зв'язатись з нами",
-      "type": "contacts",
-      "items": [
-        { "label": "Адреса", "value": "01010 Україна, м. Київ, М. Бойчука 42, к. 203" },
-        { "label": "Телефон", "value": "(044)-284-66-01" },
-        { "label": "E-mail", "value": "ntuftit@gmail.com" }
-      ]
     }
   ]
 }
