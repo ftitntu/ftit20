@@ -1,0 +1,55 @@
+name: Generate Photo Index
+
+on:
+  push:
+    paths:
+      - 'Photo/**'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Generate photo-index.json
+        run: |
+          python3 - <<'PYEOF'
+          import os, json
+
+          PHOTO_DIR = "Photo"
+          EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp", ".gif"}
+
+          result = []
+
+          if os.path.isdir(PHOTO_DIR):
+            for dept in sorted(os.listdir(PHOTO_DIR)):
+              dept_path = os.path.join(PHOTO_DIR, dept)
+              if not os.path.isdir(dept_path):
+                continue
+              files = []
+              for fname in sorted(os.listdir(dept_path)):
+                ext = os.path.splitext(fname)[1].lower()
+                if ext in EXTENSIONS:
+                  files.append(fname)
+              if files:
+                result.append({"dept": dept, "files": files})
+
+          with open("photo-index.json", "w", encoding="utf-8") as f:
+            json.dump(result, f, ensure_ascii=False, indent=2)
+
+          total = sum(len(d["files"]) for d in result)
+          print(f"Індексовано {total} фото з {len(result)} кафедр")
+          PYEOF
+
+      - name: Commit photo-index.json
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add photo-index.json
+          git diff --cached --quiet || git commit -m "chore: оновити photo-index.json [skip ci]"
+          git push
