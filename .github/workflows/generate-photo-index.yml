@@ -18,7 +18,7 @@ jobs:
 
       - name: Generate photo-index.json
         run: |
-          python3 - <<'EOF'
+          python3 - <<'PYEOF'
           import os, json
 
           PHOTO_DIR = "Photo"
@@ -43,8 +43,8 @@ jobs:
             json.dump(result, f, ensure_ascii=False, indent=2)
 
           total = sum(len(d["files"]) for d in result)
-          print(f"✅ Індексовано {total} фото з {len(result)} кафедр")
-          EOF
+          print(f"Індексовано {total} фото з {len(result)} кафедр")
+          PYEOF
 
       - name: Commit photo-index.json
         run: |
