@@ -47,7 +47,7 @@
   /* HERO */
   .hero {
     padding: 80px 40px 60px;
-    max-width: 1200px;
+    max-width: 1440px;
     margin: 0 auto;
     border-bottom: 1px solid var(--border);
     display: flex;
@@ -55,7 +55,6 @@
     justify-content: space-between;
     gap: 40px;
   }
-  .hero-left {}
   .hero-eyebrow {
     font-family: var(--font-display);
     font-size: 0.65rem;
@@ -115,8 +114,8 @@
     margin-top: 4px;
   }
 
-  /* YEAR NAV */
-  .year-nav-wrap {
+  /* FILTER BARS */
+  .filter-wrap {
     position: sticky;
     top: 0;
     z-index: 50;
@@ -124,18 +123,80 @@
     backdrop-filter: blur(16px);
     border-bottom: 1px solid var(--border);
   }
-  .year-nav {
-    max-width: 1200px;
+
+  /* Кафедри */
+  .dept-nav {
+    max-width: 1440px;
     margin: 0 auto;
     padding: 0 40px;
     display: flex;
     gap: 0;
     overflow-x: auto;
     scrollbar-width: none;
+    border-bottom: 1px solid var(--border);
+  }
+  .dept-nav::-webkit-scrollbar { display: none; }
+
+  .dept-btn {
+    padding: 12px 16px;
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--text3);
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: color 0.2s, border-color 0.2s;
+    letter-spacing: 0.02em;
+  }
+  .dept-btn:hover { color: var(--text2); }
+  .dept-btn.active {
+    color: var(--yellow);
+    border-bottom-color: var(--yellow);
+    font-weight: 500;
+  }
+
+  /* Роки */
+  .year-nav-wrap {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: flex;
+    align-items: stretch;
+  }
+  .year-nav {
+    flex: 1;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
   }
   .year-nav::-webkit-scrollbar { display: none; }
+
+  .sort-btn {
+    padding: 0 14px;
+    background: transparent;
+    border: none;
+    border-left: 1px solid var(--border);
+    color: var(--text3);
+    cursor: pointer;
+    font-size: 11px;
+    font-family: var(--font-body);
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: color 0.2s;
+    flex-shrink: 0;
+  }
+  .sort-btn:hover { color: var(--text2); }
+  .sort-btn svg { transition: transform 0.25s ease; }
+
   .year-btn {
-    padding: 14px 18px;
+    padding: 12px 16px;
     font-family: var(--font-body);
     font-size: 13px;
     font-weight: 400;
@@ -158,16 +219,19 @@
 
   /* TIMELINE */
   .timeline {
-    max-width: 1200px;
+    max-width: 1440px;
     margin: 0 auto;
     padding: 0 40px 80px;
   }
 
   .year-block {
     padding: 52px 0 0;
-    transition: opacity 0.3s;
+    animation: fadeUp 0.4s ease both;
   }
-  .year-block.hidden { display: none; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
 
   .year-header {
     display: flex;
@@ -177,7 +241,7 @@
   }
   .year-number {
     font-family: var(--font-display);
-    font-size: 2.8rem;
+    font-size: 2.0rem;
     font-weight: 700;
     background: linear-gradient(135deg, var(--sky), var(--electric));
     -webkit-background-clip: text;
@@ -207,17 +271,21 @@
     background: rgba(245,197,24,0.06);
   }
 
-  /* PHOTO GRID — 4 колонки */
+  /* PHOTO GRID */
   .photo-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 12px;
   }
+  @media(min-width: 1280px) {
+    .photo-grid { grid-template-columns: repeat(5, 1fr); }
+  }
+  @media(min-width: 1600px) {
+    .photo-grid { grid-template-columns: repeat(6, 1fr); }
+  }
 
   .photo-item {
     cursor: pointer;
-    overflow: hidden;
-    border-radius: 4px;
     position: relative;
   }
 
@@ -228,9 +296,6 @@
     position: relative;
     border-radius: 8px;
   }
-  .photo-item:nth-child(3n+1) .photo-inner { height: 180px; }
-  .photo-item:nth-child(3n+2) .photo-inner { height: 180px; }
-  .photo-item:nth-child(3n+3) .photo-inner { height: 180px; }
 
   .photo-inner img {
     width: 100%;
@@ -245,13 +310,10 @@
     filter: grayscale(0%) brightness(1);
   }
 
-  .photo-overlay { display: none; }
-  .photo-overlay-title { display: none; }
-
   .photo-caption {
-    padding: 8px 2px 0;
+    padding: 8px 0 0;
     display: flex;
-    align-items: baseline;
+    align-items: flex-start;
     justify-content: space-between;
     gap: 8px;
   }
@@ -259,28 +321,31 @@
     font-size: 12px;
     font-weight: 400;
     color: var(--text2);
-    line-height: 1.4;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
-  @media(max-width: 640px){
-    .photo-grid{
-      grid-template-columns: repeat(2, 1fr);
-      gap: 8px;
-    }
-    .photo-inner{height: 150px !important;}
-    .caption-title{
-      font-size: 11px;
-      -webkit-line-clamp: 3;
-    }
+    line-height: 1.5;
   }
   .caption-year {
     font-size: 11px;
     color: var(--text3);
     flex-shrink: 0;
+  }
+  .caption-dept {
+    font-size: 10px;
+    color: var(--yellow);
+    opacity: 0.7;
+    flex-shrink: 0;
+    font-family: var(--font-display);
+    letter-spacing: 0.05em;
+  }
+
+  @media(max-width: 900px) {
+    .photo-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media(max-width: 640px) {
+    .photo-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .photo-inner { height: 150px !important; }
+    .hero { padding: 80px 20px 40px; flex-direction: column; align-items: flex-start; }
+    .timeline { padding: 0 20px 60px; }
+    .dept-nav, .year-nav { padding: 0 20px; }
   }
 
   /* LIGHTBOX */
@@ -296,12 +361,10 @@
     animation: lbFadeIn 0.2s ease;
   }
   .lightbox.open { display: flex; }
-
   @keyframes lbFadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
   }
-
   .lb-inner {
     max-width: 900px;
     width: 100%;
@@ -311,7 +374,6 @@
     from { transform: translateY(16px); opacity: 0; }
     to { transform: translateY(0); opacity: 1; }
   }
-
   .lb-img-wrap {
     width: 100%;
     max-height: 75vh;
@@ -319,7 +381,6 @@
     align-items: center;
     justify-content: center;
     border-radius: 4px;
-    position: relative;
   }
   .lb-img-wrap img {
     max-width: 100%;
@@ -330,7 +391,6 @@
     display: block;
     border-radius: 4px;
   }
-
   .lb-bar {
     display: flex;
     align-items: center;
@@ -338,7 +398,6 @@
     padding: 16px 0 0;
     gap: 16px;
   }
-  .lb-info {}
   .lb-title {
     font-family: var(--font-display);
     font-size: 1rem;
@@ -347,10 +406,7 @@
     margin-bottom: 4px;
     letter-spacing: 0.02em;
   }
-  .lb-sub {
-    font-size: 13px;
-    color: var(--text3);
-  }
+  .lb-sub { font-size: 13px; color: var(--text3); }
   .lb-controls {
     display: flex;
     align-items: center;
@@ -367,22 +423,16 @@
     font-size: 16px;
     display: flex; align-items: center; justify-content: center;
     transition: background 0.2s, color 0.2s, border-color 0.2s;
-    font-family: var(--font-body);
   }
   .lb-btn:hover { background: rgba(41,170,255,0.15); color: var(--white); border-color: var(--border2); }
   .lb-btn:disabled { opacity: 0.25; cursor: default; }
-  .lb-counter {
-    font-size: 12px;
-    color: var(--text3);
-    min-width: 40px;
-    text-align: center;
-  }
+  .lb-counter { font-size: 12px; color: var(--text3); min-width: 40px; text-align: center; }
 
   /* FOOTER */
   .footer {
     border-top: 1px solid var(--border);
     padding: 32px 40px;
-    max-width: 1200px;
+    max-width: 1440px;
     margin: 0 auto;
     display: flex;
     align-items: center;
@@ -390,13 +440,8 @@
   }
   .footer-text { font-size: 12px; color: var(--text3); letter-spacing: 0.05em; }
 
-  /* FADE-IN ANIMATION */
-  .year-block {
-    animation: fadeUp 0.4s ease both;
-  }
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
   }
 </style>
 </head>
@@ -424,8 +469,19 @@
   </div>
 </div>
 
-<div class="year-nav-wrap">
-  <div class="year-nav" id="year-nav"></div>
+<div class="filter-wrap">
+  <!-- Рядок кафедр -->
+  <div class="dept-nav" id="dept-nav"></div>
+  <!-- Рядок років -->
+  <div class="year-nav-wrap">
+    <div class="year-nav" id="year-nav"></div>
+    <button class="sort-btn" id="sort-btn" title="Сортування по роках">
+      <svg id="sort-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="12" y1="5" x2="12" y2="19"/><polyline points="5 12 12 5 19 12"/>
+      </svg>
+      <span id="sort-label">старіші</span>
+    </button>
+  </div>
 </div>
 
 <div class="timeline" id="timeline"></div>
@@ -461,14 +517,33 @@
 const REPO     = 'ftitntu/ftit20';
 const BRANCH   = 'main';
 const FOLDER   = 'Photo';
-const API_URL  = `https://api.github.com/repos/${REPO}/contents/${FOLDER}?ref=${BRANCH}`;
 const RAW_BASE = `https://raw.githubusercontent.com/${REPO}/${BRANCH}/${FOLDER}`;
 
+function apiUrl(path) {
+  return `https://api.github.com/repos/${REPO}/contents/${path}?ref=${BRANCH}`;
+}
+
+// ── маппінг назв кафедр → хештеги ──
+const DEPT_TAG = {
+  'Кафедра ІСТ':       'ІСТ',
+  'Кафедра ТТ':        'ТТ',
+  'Кафедра ІАД та ІБ': 'ІАДІБ',
+  'Кафедра ТС та БДР': 'ТСБДР',
+  'Кафедра ВМ':        'ВМ',
+  'Кафедра МП та МК':  'МПМК',
+};
+
+function deptTag(dept) {
+  return '#' + (DEPT_TAG[dept] || dept.replace(/\s+/g, ''));
+}
+
 // ── стан ──
-let DATA         = []; // [{ year, photos: [{ title, url }] }]
+let ALL_DATA     = []; // [{ dept, year, photos:[{title,url,dept}] }]
 let allPhotos    = [];
 let currentPhotos= [];
+let activeDept   = 'all';
 let activeYear   = 'all';
+let sortAsc      = true; // true = старіші спочатку, false = новіші спочатку
 let lbIndex      = 0;
 
 // ── прогрес + nav ──
@@ -478,69 +553,208 @@ window.addEventListener('scroll', () => {
   const h = document.documentElement;
   prog.style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight) * 100) + '%';
   const s = window.scrollY > 60;
-  galNav.style.background      = s ? 'rgba(6,14,31,0.92)' : 'rgba(6,14,31,0.0)';
-  galNav.style.backdropFilter  = s ? 'blur(16px)'         : 'blur(0px)';
-  galNav.style.borderBottom    = s ? '1px solid rgba(41,170,255,0.15)' : 'none';
+  galNav.style.background     = s ? 'rgba(6,14,31,0.92)' : 'rgba(6,14,31,0.0)';
+  galNav.style.backdropFilter = s ? 'blur(16px)'         : 'blur(0px)';
+  galNav.style.borderBottom   = s ? '1px solid rgba(41,170,255,0.15)' : 'none';
 });
 
 // ── завантаження з GitHub ──
 async function load() {
   showLoading();
   try {
-    const res = await fetch(API_URL);
+    // 1. Отримуємо вміст папки Photo/
+    const res = await fetch(apiUrl(FOLDER));
     if (!res.ok) throw new Error(`GitHub API: ${res.status}`);
-    const files = await res.json();
+    const items = await res.json();
 
-    // беремо лише зображення
-    const imgs = files.filter(f =>
-      /\.(jpg|jpeg|png|webp|gif)$/i.test(f.name)
-    );
+    // 2. Беремо лише підпапки
+    const dirs = items.filter(i => i.type === 'dir');
 
-    if (!imgs.length) {
-      showEmpty();
+    // Якщо підпапок немає — читаємо фото прямо з Photo/ (зворотна сумісність)
+    if (!dirs.length) {
+      const imgs = items.filter(f => /\.(jpg|jpeg|png|webp|gif)$/i.test(f.name));
+      processPhotos([{ dept: 'Загальні', files: imgs, base: RAW_BASE }]);
       return;
     }
 
-    // групуємо по роках з назви файлу "2005_Назва.jpg"
-    const groups = {};
-    imgs.forEach(f => {
-      const match = f.name.match(/^(\d{4})[_\s-]/);
-      const year  = match ? parseInt(match[1]) : 0;
-      const title = f.name
-        .replace(/^\d{4}[_\s-]/, '')   // прибираємо рік
-        .replace(/\.[^.]+$/, '')        // прибираємо розширення
-        .trim();
+    // 3. Паралельно завантажуємо вміст кожної підпапки
+    const deptData = await Promise.all(
+      dirs.map(async dir => {
+        const r = await fetch(apiUrl(`${FOLDER}/${dir.name}`));
+        if (!r.ok) return { dept: dir.name, files: [], base: '' };
+        const files = await r.json();
+        return {
+          dept: dir.name,
+          files: files.filter(f => /\.(jpg|jpeg|png|webp|gif)$/i.test(f.name)),
+          base: `${RAW_BASE}/${encodeURIComponent(dir.name)}`
+        };
+      })
+    );
 
-      if (!groups[year]) groups[year] = [];
-      groups[year].push({
-        title,
-        url: `${RAW_BASE}/${encodeURIComponent(f.name)}`
-      });
-    });
-
-    // сортуємо роки
-    DATA = Object.keys(groups)
-      .map(y => ({
-        year: parseInt(y),
-        photos: groups[y].sort(() => Math.random() - 0.5) // перемішуємо
-      }))
-      .sort((a, b) => a.year - b.year);
-
-    // будуємо allPhotos
-    allPhotos = [];
-    DATA.forEach(yr => yr.photos.forEach(ph => allPhotos.push({ ...ph, year: yr.year })));
-
-    document.getElementById('total-count').textContent = allPhotos.length;
-    document.getElementById('footer-count').textContent =
-      allPhotos.length + ' фотографій · ' + DATA.length + ' років';
-
-    render();
+    processPhotos(deptData);
 
   } catch (e) {
     showError(e.message);
   }
 }
 
+function processPhotos(deptData) {
+  // Збираємо всі фото з усіх кафедр, групуємо по (dept, year)
+  ALL_DATA = [];
+  allPhotos = [];
+
+  deptData.forEach(({ dept, files, base }) => {
+    files.forEach(f => {
+      const match = f.name.match(/^(\d{4})[_\s-]/);
+      const year  = match ? parseInt(match[1]) : 0;
+      const title = f.name
+        .replace(/^\d{4}[_\s-]/, '')
+        .replace(/\.[^.]+$/, '')
+        .trim();
+      const url = `${base}/${encodeURIComponent(f.name)}`;
+      allPhotos.push({ title, url, year, dept });
+    });
+  });
+
+  if (!allPhotos.length) { showEmpty(); return; }
+
+  document.getElementById('total-count').textContent = allPhotos.length;
+  document.getElementById('footer-count').textContent =
+    allPhotos.length + ' фотографій · ' + deptData.filter(d => d.files.length).length + ' кафедр';
+
+  render();
+}
+
+// ── фільтрація ──
+function getFiltered() {
+  return allPhotos.filter(ph =>
+    (activeDept === 'all' || ph.dept === activeDept) &&
+    (activeYear === 'all' || ph.year === activeYear)
+  );
+}
+
+function getYearsFor(dept) {
+  const src = dept === 'all' ? allPhotos : allPhotos.filter(p => p.dept === dept);
+  const years = [...new Set(src.map(p => p.year))].sort((a,b) => a - b);
+  return years;
+}
+
+function getDepts() {
+  return [...new Set(allPhotos.map(p => p.dept))].sort();
+}
+
+// ── побудова навігацій ──
+function buildDeptNav() {
+  const nav = document.getElementById('dept-nav');
+  nav.innerHTML = '';
+
+  const allBtn = document.createElement('button');
+  allBtn.className = 'dept-btn' + (activeDept === 'all' ? ' active' : '');
+  allBtn.textContent = 'Всі кафедри';
+  allBtn.onclick = () => { activeDept = 'all'; activeYear = 'all'; render(); };
+  nav.appendChild(allBtn);
+
+  getDepts().forEach(dept => {
+    const btn = document.createElement('button');
+    btn.className = 'dept-btn' + (activeDept === dept ? ' active' : '');
+    btn.textContent = dept;
+    btn.onclick = () => { activeDept = dept; activeYear = 'all'; render(); };
+    nav.appendChild(btn);
+  });
+}
+
+function buildYearNav() {
+  const nav = document.getElementById('year-nav');
+  nav.innerHTML = '';
+
+  const allBtn = document.createElement('button');
+  allBtn.className = 'year-btn' + (activeYear === 'all' ? ' active' : '');
+  allBtn.textContent = 'Всі роки';
+  allBtn.onclick = () => { activeYear = 'all'; render(); };
+  nav.appendChild(allBtn);
+
+  getYearsFor(activeDept).forEach(yr => {
+    const btn = document.createElement('button');
+    btn.className = 'year-btn' + (activeYear === yr ? ' active' : '');
+    btn.textContent = yr || 'Рік невідомий';
+    btn.onclick = () => { activeYear = yr; render(); };
+    nav.appendChild(btn);
+  });
+}
+
+// ── рендер галереї ──
+function render() {
+  buildDeptNav();
+  buildYearNav();
+
+  const filtered = getFiltered();
+  currentPhotos = [];
+
+  const timeline = document.getElementById('timeline');
+  timeline.innerHTML = '';
+
+  if (!filtered.length) {
+    timeline.innerHTML = `
+      <div style="text-align:center;padding:5rem 2rem;">
+        <div style="font-size:2.5rem;margin-bottom:1rem;">🔍</div>
+        <div style="font-family:'Unbounded',sans-serif;font-size:.85rem;color:#fff;">Фото не знайдено</div>
+      </div>`;
+    return;
+  }
+
+  // Групуємо по роках
+  const byYear = {};
+  filtered.forEach(ph => {
+    if (!byYear[ph.year]) byYear[ph.year] = [];
+    byYear[ph.year].push(ph);
+  });
+
+  const years = Object.keys(byYear).map(Number).sort((a,b) => sortAsc ? a - b : b - a);
+
+  years.forEach((yr, yi) => {
+    const photos = byYear[yr];
+    const block = document.createElement('div');
+    block.className = 'year-block';
+    block.style.animationDelay = (yi * 0.05) + 's';
+
+    block.innerHTML = `
+      <div class="year-header">
+        <div class="year-number">${yr || 'Рік невідомий'}</div>
+        <div class="year-divider"></div>
+        <div class="year-event-tag">${photos.length} фото</div>
+      </div>
+    `;
+
+    const grid = document.createElement('div');
+    grid.className = 'photo-grid';
+
+    photos.forEach(ph => {
+      const globalIdx = currentPhotos.length;
+      currentPhotos.push(ph);
+
+      const showDept = activeDept === 'all';
+
+      const item = document.createElement('div');
+      item.className = 'photo-item';
+      item.innerHTML = `
+        <div class="photo-inner">
+          <img src="${ph.url}" alt="${ph.title}" loading="lazy">
+        </div>
+        <div class="photo-caption">
+          <span class="caption-title">${ph.title || '—'}</span>
+          ${showDept ? `<span class="caption-dept">${deptTag(ph.dept)}</span>` : `<span class="caption-year">${yr}</span>`}
+        </div>
+      `;
+      item.onclick = () => openLb(globalIdx);
+      grid.appendChild(item);
+    });
+
+    block.appendChild(grid);
+    timeline.appendChild(block);
+  });
+}
+
+// ── допоміжні ──
 function showLoading() {
   document.getElementById('timeline').innerHTML = `
     <div style="text-align:center;padding:5rem 2rem;display:flex;flex-direction:column;align-items:center;gap:1rem;">
@@ -554,7 +768,7 @@ function showEmpty() {
     <div style="text-align:center;padding:5rem 2rem;">
       <div style="font-size:2.5rem;margin-bottom:1rem;">🖼</div>
       <div style="font-family:'Unbounded',sans-serif;font-size:.85rem;color:#fff;margin-bottom:.5rem;">Фото поки немає</div>
-      <div style="font-size:.78rem;color:#94a3b8;">Додай фото у папку Photo/ на GitHub у форматі Рік_Назва.jpg</div>
+      <div style="font-size:.78rem;color:#94a3b8;">Додай фото у підпапки Photo/КафедраXXX/ у форматі Рік_Назва.jpg</div>
     </div>`;
 }
 function showError(msg) {
@@ -564,82 +778,6 @@ function showError(msg) {
       <div style="font-family:'Unbounded',sans-serif;font-size:.85rem;color:#fff;margin-bottom:.5rem;">Не вдалося завантажити</div>
       <div style="font-size:.78rem;color:#94a3b8;">${msg}</div>
     </div>`;
-}
-
-function buildNav() {
-  const nav = document.getElementById('year-nav');
-  nav.innerHTML = '';
-
-  const allBtn = document.createElement('button');
-  allBtn.className = 'year-btn' + (activeYear === 'all' ? ' active' : '');
-  allBtn.textContent = 'Всі роки';
-  allBtn.onclick = () => { activeYear = 'all'; render(); scrollNav(allBtn); };
-  nav.appendChild(allBtn);
-
-  DATA.forEach(yr => {
-    const btn = document.createElement('button');
-    btn.className = 'year-btn' + (activeYear === yr.year ? ' active' : '');
-    btn.textContent = yr.year;
-    btn.dataset.year = yr.year;
-    btn.onclick = () => { activeYear = yr.year; render(); scrollNav(btn); };
-    nav.appendChild(btn);
-  });
-}
-
-function scrollNav(btn) {
-  btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-}
-
-function render() {
-  buildNav();
-  const timeline = document.getElementById('timeline');
-  timeline.innerHTML = '';
-  currentPhotos = [];
-
-  const years = activeYear === 'all' ? DATA : DATA.filter(d => d.year === activeYear);
-
-  years.forEach((yr, yi) => {
-    const block = document.createElement('div');
-    block.className = 'year-block';
-    block.dataset.year = yr.year;
-    block.style.animationDelay = (yi * 0.05) + 's';
-
-    block.innerHTML = `
-      <div class="year-header">
-        <div class="year-number">${yr.year || 'Рік невідомий'}</div>
-        <div class="year-divider"></div>
-        <div class="year-event-tag">${yr.photos.length} фото</div>
-      </div>
-    `;
-
-    const grid = document.createElement('div');
-    grid.className = 'photo-grid';
-
-    yr.photos.forEach((ph, pi) => {
-      const globalIdx = currentPhotos.length;
-      currentPhotos.push({ ...ph, year: yr.year });
-
-      const item = document.createElement('div');
-      item.className = 'photo-item';
-      item.innerHTML = `
-        <div class="photo-inner">
-          <img src="${ph.url}" alt="${ph.title}" loading="lazy">
-          <div class="photo-overlay">
-            <span class="photo-overlay-title">${ph.title}</span>
-          </div>
-        </div>
-        <div class="photo-caption">
-          <span class="caption-title">${ph.title}</span>
-          <span class="caption-year">${yr.year}</span>
-        </div>
-      `;
-      item.onclick = () => openLb(globalIdx);
-      grid.appendChild(item);
-    });
-
-    block.appendChild(grid);
-    timeline.appendChild(block);
-  });
 }
 
 // ── лайтбокс ──
@@ -658,23 +796,32 @@ function updateLb() {
   const img = document.getElementById('lb-img');
   img.src = ph.url;
   img.alt = ph.title;
-  document.getElementById('lb-title').textContent = ph.title;
-  document.getElementById('lb-sub').textContent = ph.year;
+  document.getElementById('lb-title').textContent = ph.title || '—';
+  document.getElementById('lb-sub').textContent = deptTag(ph.dept) + (ph.year ? ' · ' + ph.year : '');
   document.getElementById('lb-counter').textContent = (lbIndex + 1) + ' / ' + currentPhotos.length;
   document.getElementById('lb-prev').disabled = lbIndex === 0;
   document.getElementById('lb-next').disabled = lbIndex === currentPhotos.length - 1;
 }
 
 document.getElementById('lb-close').onclick = closeLb;
-document.getElementById('lb-prev').onclick = () => { if (lbIndex > 0) { lbIndex--; updateLb(); } };
-document.getElementById('lb-next').onclick = () => { if (lbIndex < currentPhotos.length - 1) { lbIndex++; updateLb(); } };
+document.getElementById('lb-prev').onclick  = () => { if (lbIndex > 0) { lbIndex--; updateLb(); } };
+document.getElementById('lb-next').onclick  = () => { if (lbIndex < currentPhotos.length - 1) { lbIndex++; updateLb(); } };
 document.getElementById('lightbox').onclick = e => { if (e.target === document.getElementById('lightbox')) closeLb(); };
 document.addEventListener('keydown', e => {
   if (!document.getElementById('lightbox').classList.contains('open')) return;
-  if (e.key === 'Escape') closeLb();
-  if (e.key === 'ArrowLeft'  && lbIndex > 0)                          { lbIndex--; updateLb(); }
-  if (e.key === 'ArrowRight' && lbIndex < currentPhotos.length - 1)   { lbIndex++; updateLb(); }
+  if (e.key === 'Escape')      closeLb();
+  if (e.key === 'ArrowLeft'  && lbIndex > 0)                        { lbIndex--; updateLb(); }
+  if (e.key === 'ArrowRight' && lbIndex < currentPhotos.length - 1) { lbIndex++; updateLb(); }
 });
+
+// ── сортування по роках ──
+document.getElementById('sort-btn').onclick = () => {
+  sortAsc = !sortAsc;
+  document.getElementById('sort-label').textContent = sortAsc ? 'старіші' : 'новіші';
+  const icon = document.getElementById('sort-icon');
+  icon.style.transform = sortAsc ? 'rotate(0deg)' : 'rotate(180deg)';
+  render();
+};
 
 load();
 </script>
