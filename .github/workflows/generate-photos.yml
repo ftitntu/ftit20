@@ -1,1 +1,60 @@
+name: Generate photos.json
 
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'Photo/**'
+  workflow_dispatch:  # дозволяє запустити вручну з GitHub
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # потрібно щоб закомітити photos.json
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Generate photos.json
+        run: |
+          python3 << 'EOF'
+          import os, json
+
+          PHOTO_DIR = "Photo"
+          RAW_BASE  = "https://raw.githubusercontent.com/${{ github.repository }}/main/" + PHOTO_DIR
+          IMG_EXT   = {".jpg", ".jpeg", ".png", ".webp", ".gif"}
+
+          result = []
+
+          if os.path.isdir(PHOTO_DIR):
+              for dept in sorted(os.listdir(PHOTO_DIR)):
+                  dept_path = os.path.join(PHOTO_DIR, dept)
+                  if not os.path.isdir(dept_path):
+                      continue
+                  files = []
+                  for fname in sorted(os.listdir(dept_path)):
+                      if os.path.splitext(fname)[1].lower() in IMG_EXT:
+                          files.append(fname)
+                  if files:
+                      result.append({
+                          "dept": dept,
+                          "base": RAW_BASE + "/" + dept,
+                          "files": files
+                      })
+
+          with open("photos.json", "w", encoding="utf-8") as f:
+              json.dump(result, f, ensure_ascii=False, indent=2)
+
+          total = sum(len(d["files"]) for d in result)
+          print(f"✅ Згенеровано photos.json: {len(result)} кафедр, {total} фото")
+          EOF
+
+      - name: Commit photos.json
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add photos.json
+          git diff --cached --quiet || git commit -m "chore: update photos.json [skip ci]"
+          git push
