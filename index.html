@@ -273,7 +273,7 @@ section{padding:7rem 2rem;}
 .stat-label{font-size:.8rem;color:var(--muted);letter-spacing:.05em;}
 
 /* ══ GALLERY ══ */
-.gallery-sec{background:var(--deep);}
+.gallery-sec{background:var(--deep);padding-bottom:3rem;}
 /*
   10-фото колаж — явне розміщення кожного фото
   Сітка 12 колонок × 3 ряди, кожен елемент з точними координатами
@@ -631,8 +631,8 @@ footer{
   .nav-links{display:none;}
   .about-inner{grid-template-columns:1fr;gap:3rem;}
   .docs-grid,.video-grid{grid-template-columns:1fr 1fr;}
-  .gallery-grid{grid-template-columns:repeat(2,1fr);grid-auto-rows:150px;}
-  .gp:nth-child(1){grid-column:span 2;grid-row:span 1;}
+  .gallery-grid{grid-template-columns:repeat(3,1fr);grid-auto-rows:110px;}
+  .gp:nth-child(1){grid-column:span 3;grid-row:span 1;}
 }
 /* ══ FAB ══ */
 .fab{
@@ -778,9 +778,27 @@ footer{
 .news-desc{font-size:.76rem;color:var(--muted);line-height:1.6;}
 
 @media(max-width:600px){
-  section{padding:5rem 1.2rem;}
-  .docs-grid{grid-template-columns:1fr;}
-  .video-grid{grid-template-columns:1fr;}
+  html{font-size:87%;}
+  /* Заголовки секцій */
+  .sec-title{font-size:clamp(1.4rem,4.5vw,2.2rem);}
+  .sec-tag{font-size:.6rem;}
+  /* Картки документів */
+  .doc-title{font-size:.8rem;}
+  .doc-desc{font-size:.72rem;}
+  /* Картки відгуків */
+  .review-card-title{font-size:.8rem;}
+  .review-card-desc{font-size:.72rem;}
+  /* Стат блок */
+  .stat-val{font-size:clamp(1.4rem,5vw,2rem);}
+  /* Футер */
+  .footer-brand{font-size:.65rem;}
+  section{padding:3rem 1.2rem;}
+  .gallery-sec{padding-bottom:1.5rem;}
+  .docs-grid{grid-template-columns:1fr 1fr;}
+  .video-grid{grid-template-columns:1fr 1fr;}
+  .vid-label{font-size:.55rem;letter-spacing:.08em;padding:0 .4rem;}
+  .vid-play{width:38px;height:38px;}
+  .vid-play svg{width:14px;height:14px;}
   .stats-grid{grid-template-columns:1fr 1fr;}
   .footer-inner{flex-direction:column;text-align:center;}
   .footer-links{flex-wrap:wrap;justify-content:center;}
