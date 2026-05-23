@@ -5,13 +5,13 @@ on:
     branches: [main]
     paths:
       - 'Photo/**'
-  workflow_dispatch:  # дозволяє запустити вручну з GitHub
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: write  # потрібно щоб закомітити photos.json
+      contents: write
 
     steps:
       - name: Checkout
@@ -19,12 +19,13 @@ jobs:
 
       - name: Generate photos.json
         run: |
-          python3 << 'EOF'
+          python3 - << 'PYEOF'
           import os, json
 
           PHOTO_DIR = "Photo"
-          RAW_BASE  = "https://raw.githubusercontent.com/${{ github.repository }}/main/" + PHOTO_DIR
-          IMG_EXT   = {".jpg", ".jpeg", ".png", ".webp", ".gif"}
+          REPO = os.environ.get("GITHUB_REPOSITORY", "")
+          RAW_BASE = "https://raw.githubusercontent.com/" + REPO + "/main/" + PHOTO_DIR
+          IMG_EXT = {".jpg", ".jpeg", ".png", ".webp", ".gif"}
 
           result = []
 
@@ -48,12 +49,12 @@ jobs:
               json.dump(result, f, ensure_ascii=False, indent=2)
 
           total = sum(len(d["files"]) for d in result)
-          print(f"✅ Згенеровано photos.json: {len(result)} кафедр, {total} фото")
-          EOF
+          print("Згенеровано: " + str(len(result)) + " кафедр, " + str(total) + " фото")
+          PYEOF
 
       - name: Commit photos.json
         run: |
-          git config user.name  "github-actions[bot]"
+          git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add photos.json
           git diff --cached --quiet || git commit -m "chore: update photos.json [skip ci]"
