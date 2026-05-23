@@ -691,40 +691,24 @@ window.addEventListener('scroll', () => {
   galNav.style.borderBottom   = s ? '1px solid rgba(41,170,255,0.15)' : 'none';
 });
 
-// ── завантаження з GitHub ──
+// ── завантаження з photos.json (генерується GitHub Actions) ──
 async function load() {
   showLoading();
   try {
-    // 1. Отримуємо вміст папки Photo/
-    const res = await fetch(apiUrl(FOLDER));
-    if (!res.ok) throw new Error(`GitHub API: ${res.status}`);
-    const items = await res.json();
+    const JSON_URL = `https://raw.githubusercontent.com/${REPO}/${BRANCH}/photos.json`;
+    const res = await fetch(JSON_URL);
+    if (!res.ok) throw new Error(`Не вдалося завантажити photos.json (${res.status}). Запусти workflow у GitHub Actions.`);
+    const deptData = await res.json();
 
-    // 2. Беремо лише підпапки
-    const dirs = items.filter(i => i.type === 'dir');
+    // deptData: [{ dept, base, files: [fileName, ...] }]
+    // Перетворюємо у формат який очікує processPhotos
+    const adapted = deptData.map(({ dept, base, files }) => ({
+      dept,
+      base,
+      files: files.map(name => ({ name }))
+    }));
 
-    // Якщо підпапок немає — читаємо фото прямо з Photo/ (зворотна сумісність)
-    if (!dirs.length) {
-      const imgs = items.filter(f => /\.(jpg|jpeg|png|webp|gif)$/i.test(f.name));
-      processPhotos([{ dept: 'Загальні', files: imgs, base: RAW_BASE }]);
-      return;
-    }
-
-    // 3. Паралельно завантажуємо вміст кожної підпапки
-    const deptData = await Promise.all(
-      dirs.map(async dir => {
-        const r = await fetch(apiUrl(`${FOLDER}/${dir.name}`));
-        if (!r.ok) return { dept: dir.name, files: [], base: '' };
-        const files = await r.json();
-        return {
-          dept: dir.name,
-          files: files.filter(f => /\.(jpg|jpeg|png|webp|gif)$/i.test(f.name)),
-          base: `${RAW_BASE}/${encodeURIComponent(dir.name)}`
-        };
-      })
-    );
-
-    processPhotos(deptData);
+    processPhotos(adapted);
 
   } catch (e) {
     showError(e.message);
