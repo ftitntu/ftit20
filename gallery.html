@@ -368,6 +368,9 @@
   .lb-inner {
     max-width: 900px;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    height: calc(75vh + 72px);
     animation: lbSlide 0.25s cubic-bezier(0.25,0.46,0.45,0.94);
   }
   @keyframes lbSlide {
@@ -376,7 +379,8 @@
   }
   .lb-img-wrap {
     width: 100%;
-    max-height: 75vh;
+    height: 75vh;
+    flex-shrink: 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -397,6 +401,13 @@
     justify-content: space-between;
     padding: 16px 0 0;
     gap: 16px;
+    flex-shrink: 0;
+    height: 72px;
+  }
+  .lb-info {
+    min-width: 0;
+    flex: 1;
+    overflow: hidden;
   }
   .lb-title {
     font-family: var(--font-display);
@@ -405,13 +416,17 @@
     color: var(--white);
     margin-bottom: 4px;
     letter-spacing: 0.02em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
-  .lb-sub { font-size: 13px; color: var(--text3); }
+  .lb-sub { font-size: 13px; color: var(--text3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .lb-controls {
     display: flex;
     align-items: center;
     gap: 8px;
     flex-shrink: 0;
+    margin-left: auto;
   }
   .lb-btn {
     width: 40px; height: 40px;
@@ -427,6 +442,123 @@
   .lb-btn:hover { background: rgba(41,170,255,0.15); color: var(--white); border-color: var(--border2); }
   .lb-btn:disabled { opacity: 0.25; cursor: default; }
   .lb-counter { font-size: 12px; color: var(--text3); min-width: 40px; text-align: center; }
+
+  /* підказка свайпу на мобільних */
+  @media(max-width: 640px) {
+    .lb-inner { touch-action: pan-y; }
+    .lb-swipe-hint {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 10px;
+      opacity: 0.4;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      animation: hintFade 4s ease 0.5s forwards;
+    }
+    @keyframes hintFade {
+      0%   { opacity: 0.4; }
+      70%  { opacity: 0.4; }
+      100% { opacity: 0; }
+    }
+
+    /* Мобільний лайтбокс: перебудова layout */
+    .lightbox {
+      padding: 0;
+      align-items: flex-start;
+    }
+    .lb-inner {
+      width: 100%;
+      height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* Кнопка закриття — вгорі справа, нижче навбару */
+    #lb-close {
+      position: fixed;
+      top: 60px;
+      right: 14px;
+      z-index: 300;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.55);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.15);
+      font-size: 18px;
+      color: var(--white);
+    }
+
+    /* Зображення — займає простір, лишаючи місце для тексту */
+    .lb-img-wrap {
+      flex: 1;
+      max-height: 65dvh;
+      width: 100%;
+      border-radius: 0;
+    }
+    .lb-img-wrap img {
+      max-height: 65dvh;
+      border-radius: 0;
+    }
+
+    /* Назва фото — одразу під фото, на всю ширину */
+    .lb-bar {
+      flex-direction: column;
+      align-items: stretch;
+      padding: 12px 16px 0;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+    .lb-info {
+      width: 100%;
+    }
+    .lb-title {
+      font-size: 0.82rem;
+      font-weight: 500;
+      width: 100%;
+      white-space: normal;
+    }
+    .lb-sub {
+      font-size: 12px;
+    }
+
+    /* Навігаційні кнопки — внизу екрану, фіксовані */
+    .lb-controls {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 12px 20px 28px;
+      background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      z-index: 250;
+    }
+    .lb-btn:not(#lb-close) {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      font-size: 20px;
+      background: rgba(255,255,255,0.12);
+      border-color: rgba(255,255,255,0.2);
+      color: var(--white);
+      backdrop-filter: blur(8px);
+    }
+    .lb-counter {
+      font-size: 13px;
+      color: rgba(255,255,255,0.7);
+      min-width: 60px;
+    }
+  }
+  @media(min-width: 641px) {
+    .lb-swipe-hint { display: none; }
+  }
 
   /* FOOTER */
   .footer {
@@ -506,9 +638,10 @@
         <button class="lb-btn" id="lb-prev">←</button>
         <span class="lb-counter" id="lb-counter"></span>
         <button class="lb-btn" id="lb-next">→</button>
-        <button class="lb-btn" id="lb-close">✕</button>
       </div>
+      <button class="lb-btn" id="lb-close">✕</button>
     </div>
+    <div class="lb-swipe-hint">← свайп →</div>
   </div>
 </div>
 
@@ -813,6 +946,34 @@ document.addEventListener('keydown', e => {
   if (e.key === 'ArrowLeft'  && lbIndex > 0)                        { lbIndex--; updateLb(); }
   if (e.key === 'ArrowRight' && lbIndex < currentPhotos.length - 1) { lbIndex++; updateLb(); }
 });
+
+// ── свайп на смартфоні ──
+(function() {
+  const lb = document.getElementById('lightbox');
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let isDragging  = false;
+
+  lb.addEventListener('touchstart', e => {
+    touchStartX = e.changedTouches[0].clientX;
+    touchStartY = e.changedTouches[0].clientY;
+    isDragging  = false;
+  }, { passive: true });
+
+  lb.addEventListener('touchmove', e => {
+    const dx = Math.abs(e.changedTouches[0].clientX - touchStartX);
+    const dy = Math.abs(e.changedTouches[0].clientY - touchStartY);
+    if (dx > dy && dx > 8) isDragging = true;
+  }, { passive: true });
+
+  lb.addEventListener('touchend', e => {
+    if (!isDragging) return;
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    if (dx < -50 && lbIndex < currentPhotos.length - 1) { lbIndex++; updateLb(); }
+    if (dx >  50 && lbIndex > 0)                        { lbIndex--; updateLb(); }
+    isDragging = false;
+  }, { passive: true });
+})();
 
 // ── сортування по роках ──
 document.getElementById('sort-btn').onclick = () => {
