@@ -1,4 +1,4 @@
-name: Generate photos.json
+name: generatephotos.json
 
 on:
   push:
@@ -17,7 +17,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Generate photos.json
+      - name: generatephotos.json
         run: |
           python3 - << 'PYEOF'
           import os, json
