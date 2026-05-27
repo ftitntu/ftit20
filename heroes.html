@@ -545,8 +545,8 @@ function buildModal(hero) {
     ? `Випуск ${hero.graduationYear} · ${hero.department}`
     : `Студент ${hero.course} курсу · спеціальність «${hero.specialty}»`;
 
-  const awards = (hero.awards||[]).map(a=>`<span class="award-badge">🎖 ${a}</span>`).join('');
-  const hobbies = (hero.hobbies||[]).map(h=>`<span class="modal-tag">${h}</span>`).join('');
+  const awards       = (hero.awards||[]).map(a=>`<span class="award-badge">🎖 ${a}</span>`).join('');
+  const hobbies      = (hero.hobbies||[]).map(h=>`<span class="modal-tag">${h}</span>`).join('');
   const achievements = (hero.achievements||[]).map(a=>`<p class="modal-text">🏆 ${a}</p>`).join('');
 
   return `
@@ -558,17 +558,19 @@ function buildModal(hero) {
         <div class="modal-rank-line">${hero.rank||'Воїн'} · ЗСУ</div>
         <div class="modal-name">${fullName}</div>
         <div class="modal-dates">${years}${hero.age ? ' · ' + hero.age + ' років' : ''}</div>
-        <div class="modal-unit">${hero.unit}</div>
+        ${hero.unit ? `<div class="modal-unit">${hero.unit}</div>` : ''}
         <div class="modal-study">${study}</div>
         ${awards ? `<div class="modal-awards">${awards}</div>` : ''}
       </div>
     </div>
 
+    ${hero.battleInfo ? `
     <div class="modal-section">
       <div class="modal-section-title">Останній бій</div>
       <p class="modal-text">${hero.battleInfo}</p>
-    </div>
+    </div>` : ''}
 
+    ${hero.bio ? `
     <div class="modal-section">
       <div class="modal-section-title">Біографія</div>
       <p class="modal-text">${hero.bio}</p>
@@ -577,7 +579,7 @@ function buildModal(hero) {
           <p>${hero.quote}</p>
           ${hero.quoteAuthor ? `<cite>— ${hero.quoteAuthor}</cite>` : ''}
         </div>` : ''}
-    </div>
+    </div>` : ''}
 
     ${hobbies ? `
     <div class="modal-section">
@@ -591,6 +593,7 @@ function buildModal(hero) {
       ${achievements}
     </div>` : ''}
 
+    ${(hero.family || hero.burialPlace) ? `
     <div class="modal-section">
       <div class="modal-section-title">Пам'ять</div>
       ${hero.family ? `<p class="modal-text">Залишились: ${hero.family}</p>` : ''}
@@ -602,7 +605,8 @@ function buildModal(hero) {
           </svg>
           Поховано: ${hero.burialPlace}
         </div>` : ''}
-    </div>`;
+    </div>` : ''}`;
+}
 }
 
 /* modal open/close */
