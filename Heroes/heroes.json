@@ -36,6 +36,32 @@
       "achievements": [
         "Диплом І ступеня регіонального рівня — Всеукраїнська гра «Соняшник»"
       ]
+    },
+    {
+      "id": 2,
+      "firstName": "Олександр",
+      "lastName": "Іваненко",
+      "middleName": "Сергійович",
+      "callsign": null,
+      "born": "02.10.1999",
+      "died": "13.01.2023",
+      "age": 23,
+      "photo": "Heroes/Іваненко.jpg",
+      "unit": null,
+      "rank": "Солдат",
+      "specialty": "Транспортні технології",
+      "course": 4,
+      "department": null,
+      "graduationYear": null,
+      "awards": [],
+      "bio": null,
+      "battleInfo": null,
+      "burialPlace": null,
+      "family": null,
+      "quote": null,
+      "quoteAuthor": null,
+      "hobbies": [],
+      "achievements": []
     }
   ]
 }
