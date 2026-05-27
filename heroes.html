@@ -627,38 +627,87 @@ document.getElementById('modal-close').addEventListener('click', closeModal);
 overlay.addEventListener('click', e => { if(e.target===overlay) closeModal(); });
 document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
 
-/* fetch heroes.json */
-async function loadHeroes() {
-  const grid = document.getElementById('heroes-grid');
-  try {
-    const res  = await fetch('Heroes/heroes.json');
-    if(!res.ok) throw new Error(`HTTP ${res.status}`);
-    const data = await res.json();
-    const heroes = data.heroes || [];
-
-    grid.innerHTML = '';
-    if(!heroes.length) {
-      grid.innerHTML = '<div class="loading-state">Дані відсутні</div>';
-      return;
-    }
-    heroes.forEach((hero, i) => {
-      const card = buildCard(hero);
-      card.style.opacity = '0';
-      card.style.transform = 'translateY(20px)';
-      card.style.transition = 'opacity .5s ease, transform .5s ease';
-      grid.appendChild(card);
-      setTimeout(() => {
-        card.style.opacity = '1';
-        card.style.transform = 'translateY(0)';
-      }, 120 + i * 100);
-    });
-  } catch(err) {
-    console.error(err);
-    grid.innerHTML = `<div class="loading-state">
-      Не вдалось завантажити дані.<br>
-      <small style="opacity:.4;font-size:.7rem">${err.message}</small>
-    </div>`;
+/* ═══════════════════════════════════════
+   ДАНІ ГЕРОЇВ — редагуй тут або в heroes.json
+   Щоб додати героя — скопіюй блок і заповни поля.
+   null = інформація невідома / буде додана пізніше
+═══════════════════════════════════════ */
+const HEROES_DATA = [
+  {
+    "id": 1,
+    "firstName": "Артем",
+    "lastName": "Патей",
+    "middleName": "Анатолійович",
+    "callsign": "Патей",
+    "born": "21.07.2003",
+    "died": "08.11.2023",
+    "age": 20,
+    "photo": "Heroes/Патей.jpg",
+    "unit": "12-та бригада спеціального призначення «Азов»",
+    "rank": "Солдат",
+    "specialty": "Інженерія програмного забезпечення",
+    "course": 3,
+    "department": "Кафедра інформаційних технологій",
+    "graduationYear": null,
+    "awards": [
+      "Орден «За мужність» ІІІ ступеня",
+      "Медаль ПЦУ «За жертовність і любов до України»"
+    ],
+    "bio": "Народився Артем у Запоріжжі. Після школи вступив до Київського національного транспортного університету, навчався за спеціальністю «Інженерія програмного забезпечення». На 3 курсі вирішив долучитись до лав Національної гвардії України. Змінивши студентську авдиторію на окопи, Артем боронив країну в складі 12-ої бригади спеціального призначення «Азов». Служив у мінометному взводі спеціального призначення (на бронетранспортерах) 2-го батальйону спеціального призначення.",
+    "battleInfo": "Солдат Артем Патей загинув під час штурму ворожих позицій поблизу селища Діброва Луганської області. Свій останній бій захисник прийняв 8 листопада 2023 року.",
+    "burialPlace": "Кладовище Святого Миколая, Запоріжжя",
+    "family": "Батьки",
+    "quote": "Артем з дитинства займався бальними танцями, потім чотири роки — футболом, байдарками та гітарою. В школі виступав на всіх концертах та конкурсах. Десь з 13-ти років цікавився політикою. Син ще з юних років проявляв неабияку цікавість і любов до звичаїв українців, історії України.",
+    "quoteAuthor": "мама Лілія",
+    "hobbies": ["Бальні танці","Футбол","Байдарки","Гітара","Олімпіади"],
+    "achievements": ["Диплом І ступеня регіонального рівня — Всеукраїнська гра «Соняшник»"]
+  },
+  {
+    "id": 2,
+    "firstName": "Олександр",
+    "lastName": "Іваненко",
+    "middleName": "Сергійович",
+    "callsign": null,
+    "born": "02.10.1999",
+    "died": "13.01.2023",
+    "age": 23,
+    "photo": "Heroes/Іваненко.jpg",
+    "unit": null,
+    "rank": "Солдат",
+    "specialty": "Транспортні технології",
+    "course": 4,
+    "department": null,
+    "graduationYear": null,
+    "awards": [],
+    "bio": null,
+    "battleInfo": null,
+    "burialPlace": null,
+    "family": null,
+    "quote": null,
+    "quoteAuthor": null,
+    "hobbies": [],
+    "achievements": []
   }
+];
+
+function loadHeroes() {
+  const grid = document.getElementById('heroes-grid');
+  grid.innerHTML = '';
+  if (!HEROES_DATA.length) {
+    grid.innerHTML = '<div class="loading-state">Дані відсутні</div>';
+    return;
+  }
+  HEROES_DATA.forEach((hero, i) => {
+    const card = buildCard(hero);
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(20px)';
+    card.style.transition = 'opacity .5s ease, transform .5s ease';
+    grid.appendChild(card);
+    setTimeout(() => {
+      card.style.opacity = '1';
+      card.style.transform = 'translateY(0)';
+    }, 120 + i * 100);
+  });
 }
 
 loadHeroes();
