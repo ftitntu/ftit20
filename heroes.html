@@ -136,36 +136,34 @@ section{padding:5rem 2rem;}
 .loading-dots span:nth-child(3){animation-delay:.4s;}
 @keyframes loadPulse{0%,100%{opacity:.2;transform:scale(.8);}50%{opacity:1;transform:scale(1.2);}}
 
-/* GRID */
+/* GRID — вертикальний список */
 .heroes-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
-  gap:1.5rem;
+  display:flex;
+  flex-direction:column;
+  gap:1rem;
 }
 
-/* CARD — стиль як на фото: портрет + плашка знизу */
+/* CARD — горизонтальний рядок */
 .hero-card{
+  background:var(--navy);
+  border:1px solid var(--gold-border);
   border-radius:14px;
   overflow:hidden;
-  border:1px solid var(--gold-border);
-  background:var(--navy);
+  display:flex;
+  min-height:160px;
   position:relative;
   transition:border-color .3s,transform .3s,box-shadow .3s;
   cursor:default;
 }
 .hero-card:hover{
   border-color:rgba(245,197,24,.4);
-  transform:translateY(-5px);
-  box-shadow:0 16px 40px rgba(0,0,0,.5);
-}
-.hero-card::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:2px;z-index:2;
-  background:linear-gradient(90deg,transparent,rgba(245,197,24,.6),transparent);
+  transform:translateY(-3px);
+  box-shadow:0 20px 50px rgba(0,0,0,.6);
 }
 
 /* photo */
 .card-photo{
-  width:100%;aspect-ratio:3/4;
+  width:180px;flex-shrink:0;
   background:var(--navy-mid);
   position:relative;overflow:hidden;
 }
@@ -181,53 +179,66 @@ section{padding:5rem 2rem;}
   display:flex;align-items:center;justify-content:center;
   font-family:'Unbounded',sans-serif;font-size:2.5rem;font-weight:700;color:var(--gold);
 }
-
-/* Ukrainian flag stripe overlay top */
 .card-photo::after{
-  content:'';position:absolute;top:0;left:0;right:0;height:5px;
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
   background:linear-gradient(90deg,#005BBB 50%,#FFD500 50%);
-  opacity:.7;z-index:1;
+  z-index:1;
 }
 
-/* info plaque — білий фон як на фото */
-.card-plaque{
-  background:#f0ede8;
-  padding:.85rem 1rem 1rem;
-  text-align:center;
+/* body */
+.card-body{
+  padding:1.5rem 2rem;
+  display:flex;
+  align-items:center;
+  gap:2rem;
+  flex:1;
 }
-.card-plaque-name{
-  font-family:'Geologica',sans-serif;
-  font-size:.75rem;font-weight:600;
-  color:#1a1a1a;
-  line-height:1.4;margin-bottom:.3rem;
+.card-main{flex:1;}
+.card-unit{
+  font-size:.62rem;letter-spacing:.13em;text-transform:uppercase;
+  color:rgba(147,197,253,.65);
+  margin-bottom:.5rem;
 }
-.card-plaque-dates{
-  font-size:.68rem;color:#444;
-  margin-bottom:.25rem;
-}
-.card-plaque-study{
-  font-size:.62rem;color:#555;
-  line-height:1.45;margin-bottom:.75rem;
-}
-
-/* кнопка */
-.card-btn{
-  display:inline-flex;align-items:center;justify-content:center;gap:.4rem;
-  width:100%;
+.card-name{
   font-family:'Unbounded',sans-serif;
-  font-size:.58rem;font-weight:400;letter-spacing:.12em;text-transform:uppercase;
-  color:#1a1a1a;
+  font-size:.95rem;font-weight:700;
+  color:var(--white);line-height:1.3;
+  margin-bottom:.45rem;
+}
+.card-dates{
+  font-size:.72rem;
+  color:rgba(245,197,24,.85);
+  letter-spacing:.04em;
+  margin-bottom:.35rem;
+}
+.card-dept{
+  font-size:.67rem;color:var(--muted);line-height:1.5;
+}
+.card-right{flex-shrink:0;}
+.card-btn{
+  font-family:'Unbounded',sans-serif;
+  font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--white);
   background:transparent;
-  border:1px solid rgba(0,0,0,.25);
-  border-radius:6px;
-  padding:.55em 1em;
+  border:1px solid rgba(100,116,139,.3);
+  border-radius:7px;
+  padding:.75em 1.4em;
   cursor:pointer;
-  transition:background .2s,border-color .2s,color .2s;
+  white-space:nowrap;
+  transition:border-color .2s,background .2s;
 }
 .card-btn:hover{
-  background:#1a1a1a;color:#f0ede8;border-color:#1a1a1a;
+  border-color:rgba(245,197,24,.5);
+  background:rgba(245,197,24,.05);
 }
-.card-btn svg{width:12px;height:12px;flex-shrink:0;}
+
+@media(max-width:600px){
+  .hero-card{flex-direction:column;min-height:unset;}
+  .card-photo{width:100%;height:220px;}
+  .card-body{flex-direction:column;align-items:flex-start;gap:1rem;padding:1.25rem;}
+  .card-right{width:100%;}
+  .card-btn{width:100%;text-align:center;}
+}
 
 /* DIVIDER */
 .gold-divider{
@@ -500,9 +511,8 @@ function buildCard(hero) {
   const fullName = [hero.lastName, hero.firstName, hero.middleName||''].join(' ').trim();
   const years    = `${hero.born} – ${hero.died}`;
   const study    = hero.graduationYear
-    ? `Випуск ${hero.graduationYear}`
-    : `Студент ${hero.course} курсу`;
-  const studyLine2 = `«${hero.specialty}»`;
+    ? `Випуск ${hero.graduationYear} · ${hero.department}`
+    : `Студент ${hero.course} курсу · спеціальність «${hero.specialty}»`;
 
   const card = document.createElement('div');
   card.className = 'hero-card';
@@ -510,18 +520,18 @@ function buildCard(hero) {
     <div class="card-photo">
       ${imgOrFallback(hero.photo, fullName, 'card-photo-fallback', initials(hero))}
     </div>
-    <div class="card-plaque">
-      <div class="card-plaque-name">${fullName}</div>
-      <div class="card-plaque-dates">${years}</div>
-      <div class="card-plaque-study">${study}<br>${studyLine2}</div>
-      <button class="card-btn" aria-label="Детальна інформація про ${fullName}">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="10"/>
-          <line x1="12" y1="8" x2="12" y2="12"/>
-          <line x1="12" y1="16" x2="12.01" y2="16"/>
-        </svg>
-        Детальна інформація
-      </button>
+    <div class="card-body">
+      <div class="card-main">
+        ${hero.unit ? `<div class="card-unit">${hero.unit}</div>` : ''}
+        <div class="card-name">${fullName}</div>
+        <div class="card-dates">${years}</div>
+        <div class="card-dept">${study}</div>
+      </div>
+      <div class="card-right">
+        <button class="card-btn" aria-label="Детальна інформація про ${fullName}">
+          Детальна інформація
+        </button>
+      </div>
     </div>`;
   card.querySelector('.card-btn').addEventListener('click', () => openModal(hero));
   return card;
