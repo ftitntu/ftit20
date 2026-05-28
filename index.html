@@ -1238,11 +1238,227 @@ footer{
   opacity:.8;transition:opacity .2s;
 }
 .adb-extra-link:hover{opacity:1;}
+
+/* ══ FUNDATORS BUTTON ══ */
+.fundators-btn{
+  background:linear-gradient(135deg,rgba(245,197,24,.12),rgba(245,197,24,.06)) !important;
+  border-color:rgba(245,197,24,.35) !important;
+  color:var(--yellow) !important;
+}
+.fundators-btn:hover{
+  background:linear-gradient(135deg,rgba(245,197,24,.22),rgba(245,197,24,.12)) !important;
+  border-color:rgba(245,197,24,.6) !important;
+  box-shadow:0 0 24px rgba(245,197,24,.2) !important;
+}
+.fundators-btn svg{stroke:var(--yellow);}
+
+/* ══ FUNDATORS DRAWER ══ */
+.fundators-drawer-overlay{
+  position:fixed;inset:0;z-index:1100;
+  background:rgba(6,14,31,.65);backdrop-filter:blur(5px);
+  opacity:0;pointer-events:none;
+  transition:opacity .35s ease;
+}
+.fundators-drawer-overlay.open{opacity:1;pointer-events:all;}
+
+.fundators-drawer{
+  position:fixed;top:0;right:0;bottom:0;z-index:1200;
+  width:min(640px,96vw);
+  background:var(--navy);
+  border-left:1px solid var(--border);
+  display:flex;flex-direction:column;
+  transform:translateX(100%);
+  transition:transform .4s cubic-bezier(.4,0,.2,1);
+}
+.fundators-drawer.open{transform:translateX(0);box-shadow:-24px 0 80px rgba(0,0,0,.6);}
+
+.fundators-drawer-header{
+  display:flex;align-items:flex-start;justify-content:space-between;
+  padding:2rem 2rem 1.4rem;
+  border-bottom:1px solid var(--border);
+  flex-shrink:0;
+  background:linear-gradient(135deg,var(--navy-mid) 0%,var(--navy) 100%);
+  position:relative;overflow:hidden;
+}
+.fundators-drawer-header::before{
+  content:'2006';
+  position:absolute;right:-1rem;bottom:-1.5rem;
+  font-family:'Unbounded',sans-serif;
+  font-size:5rem;font-weight:900;
+  color:rgba(245,197,24,.05);
+  pointer-events:none;line-height:1;
+}
+.fundators-drawer-tag{
+  font-family:'Unbounded',sans-serif;
+  font-size:.6rem;font-weight:400;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--yellow);
+  display:flex;align-items:center;gap:.6rem;margin-bottom:.4rem;
+}
+.fundators-drawer-tag::before{content:'';width:18px;height:1px;background:var(--yellow);}
+.fundators-drawer-title{
+  font-family:'Unbounded',sans-serif;
+  font-size:1.1rem;font-weight:700;color:var(--white);line-height:1.2;
+}
+.fundators-drawer-sub{font-size:.72rem;color:var(--muted);letter-spacing:.06em;margin-top:.3rem;}
+.fundators-drawer-close{
+  background:rgba(148,163,184,.1);border:1px solid var(--border);
+  border-radius:10px;padding:.55rem;cursor:pointer;color:var(--muted);
+  display:flex;align-items:center;justify-content:center;
+  transition:background .2s,color .2s;flex-shrink:0;margin-top:.2rem;
+}
+.fundators-drawer-close:hover{background:rgba(255,255,255,.08);color:var(--white);}
+
+.fundators-drawer-body{
+  flex:1;overflow-y:auto;padding:2rem;
+  scrollbar-width:thin;scrollbar-color:var(--border) transparent;
+  display:flex;flex-direction:column;gap:1.5rem;
+}
+.fundators-drawer-body::-webkit-scrollbar{width:4px;}
+.fundators-drawer-body::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
+
+/* Fundator card */
+.fundator-card{
+  background:var(--navy-mid);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:1.8rem;
+  display:flex;gap:1.5rem;
+  align-items:flex-start;
+  transition:border-color .3s,transform .3s;
+  position:relative;overflow:hidden;
+}
+.fundator-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--yellow),transparent);
+  opacity:0;transition:opacity .3s;
+}
+.fundator-card:hover{border-color:rgba(245,197,24,.35);transform:translateY(-2px);}
+.fundator-card:hover::before{opacity:1;}
+
+.fundator-photo{
+  width:100px;height:120px;flex-shrink:0;
+  border-radius:10px;overflow:hidden;
+  border:2px solid rgba(245,197,24,.2);
+  background:var(--navy);
+}
+.fundator-photo img{
+  width:100%;height:100%;object-fit:cover;object-position:top center;
+  display:block;filter:brightness(.9) saturate(.85);
+  transition:filter .3s;
+}
+.fundator-card:hover .fundator-photo img{filter:brightness(1) saturate(1);}
+
+.fundator-info{flex:1;min-width:0;}
+.fundator-label{
+  font-family:'Unbounded',sans-serif;
+  font-size:.58rem;font-weight:400;letter-spacing:.25em;text-transform:uppercase;
+  color:var(--yellow);margin-bottom:.4rem;
+}
+.fundator-name{
+  font-family:'Unbounded',sans-serif;
+  font-size:.95rem;font-weight:700;color:var(--white);
+  line-height:1.3;margin-bottom:.6rem;
+}
+.fundator-desc{
+  font-size:.82rem;line-height:1.65;color:var(--muted);
+  margin-bottom:1rem;
+}
+.fundator-pdf-btn{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-family:'Unbounded',sans-serif;
+  font-size:.62rem;font-weight:400;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--yellow);
+  background:rgba(245,197,24,.08);
+  border:1px solid rgba(245,197,24,.3);
+  padding:.6em 1.3em;border-radius:2em;
+  cursor:pointer;text-decoration:none;
+  transition:background .2s,border-color .2s,transform .2s;
+}
+.fundator-pdf-btn:hover{
+  background:rgba(245,197,24,.16);border-color:rgba(245,197,24,.55);
+  transform:translateY(-1px);
+}
+.fundator-pdf-btn svg{width:14px;height:14px;stroke:var(--yellow);flex-shrink:0;}
 </style>
 </head>
 <body>
 
 <div id="prog"></div>
+
+<!-- FUNDATORS DRAWER OVERLAY -->
+<div class="fundators-drawer-overlay" id="fundatorsDrawerOverlay" onclick="closeFundatorsDrawer()"></div>
+
+<!-- FUNDATORS DRAWER -->
+<div class="fundators-drawer" id="fundatorsDrawer">
+  <div class="fundators-drawer-header">
+    <div>
+      <div class="fundators-drawer-tag">Фундатори</div>
+      <div class="fundators-drawer-title">Фундатори факультету</div>
+      <div class="fundators-drawer-sub">Люди, які заснували ФТІТ у 2006 році</div>
+    </div>
+    <button class="fundators-drawer-close" onclick="closeFundatorsDrawer()" aria-label="Закрити">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+
+  <div class="fundators-drawer-body">
+
+    <!-- Гуляєв -->
+    <div class="fundator-card">
+      <div class="fundator-photo">
+        <img src="https://raw.githubusercontent.com/ftitntu/ftit20/main/Fundators/Гуляєв.png"
+             alt="Гуляєв Валерій Іванович"
+             onerror="this.style.display='none'">
+      </div>
+      <div class="fundator-info">
+        <div class="fundator-name">Гуляєв Валерій Іванович</div>
+        <div class="fundator-desc">Один із засновників факультету транспортних та інформаційних технологій, доктор технічних наук, професор. Стояв біля витоків формування наукових шкіл і освітніх програм ФТІТ.</div>
+        <button class="fundator-pdf-btn"
+           onclick="openPdf('https://raw.githubusercontent.com/ftitntu/ftit20/main/Fundators/%D0%93%D1%83%D0%BB%D1%8F%D1%94%D0%B2%20%D0%92.%D0%86..pdf','Гуляєв Валерій Іванович')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          Детальна інформація
+        </button>
+      </div>
+    </div>
+
+    <!-- Поліщук -->
+    <div class="fundator-card">
+      <div class="fundator-photo">
+        <img src="https://raw.githubusercontent.com/ftitntu/ftit20/main/Fundators/Поліщук.png"
+             alt="Поліщук Володимир Петрович"
+             onerror="this.style.display='none'">
+      </div>
+      <div class="fundator-info">
+        <div class="fundator-name">Поліщук Володимир Петрович</div>
+        <div class="fundator-desc">Доктор технічних наук, професор, академік. Один із засновників факультету, видатний вчений у сфері транспортних систем та безпеки дорожнього руху, автор багатьох наукових праць і підручників.</div>
+        <button class="fundator-pdf-btn"
+           onclick="openPdf('https://raw.githubusercontent.com/ftitntu/ftit20/main/Fundators/%D0%9F%D0%BE%D0%BB%D1%96%D1%89%D1%83%D0%BA%20%D0%92.%D0%9F..pdf','Поліщук Володимир Петрович')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          Детальна інформація
+        </button>
+      </div>
+    </div>
+
+    <!-- Хабутдінов -->
+    <div class="fundator-card">
+      <div class="fundator-photo">
+        <img src="https://raw.githubusercontent.com/ftitntu/ftit20/main/Fundators/Хабутдінов.jpg"
+             alt="Хабутдінов Рамазан Абдуллайович"
+             onerror="this.style.display='none'">
+      </div>
+      <div class="fundator-info">
+        <div class="fundator-name">Хабутдінов Рамазан Абдуллайович</div>
+        <div class="fundator-desc">Один із засновників факультету транспортних та інформаційних технологій. Зробив значний внесок у становлення інфраструктури та розвиток освітнього середовища ФТІТ з перших днів його існування.</div>
+        <button class="fundator-pdf-btn"
+           onclick="openPdf('https://raw.githubusercontent.com/ftitntu/ftit20/main/Fundators/%D0%A5%D0%B0%D0%B1%D1%83%D1%82%D0%B4%D1%96%D0%BD%D0%BE%D0%B2%20%D0%A0.%D0%90..pdf','Хабутдінов Рамазан Абдуллайович')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          Детальна інформація
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
 
 <!-- NAV -->
 <nav id="nav">
@@ -1303,6 +1519,10 @@ footer{
           <button class="about-open-btn kafedr-btn" onclick="openKafedrDrawer()">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-2 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
             Кафедри факультету
+          </button>
+          <button class="about-open-btn fundators-btn" onclick="openFundatorsDrawer()">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            Фундатори факультету
           </button>
         </div>
       </div>
@@ -1867,6 +2087,17 @@ function closeAboutDrawer(){
   document.body.style.overflow = '';
 }
 
+function openFundatorsDrawer(){
+  document.getElementById('fundatorsDrawer').classList.add('open');
+  document.getElementById('fundatorsDrawerOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeFundatorsDrawer(){
+  document.getElementById('fundatorsDrawer').classList.remove('open');
+  document.getElementById('fundatorsDrawerOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
 // Drawer
 function toggleDrawer(){
   const drawer = document.getElementById('drawer');
@@ -2005,6 +2236,7 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
     if (document.getElementById('aboutDrawer').classList.contains('open')) { closeAboutDrawer(); return; }
     if (document.getElementById('kafedrDrawer').classList.contains('open')) { closeKafedrDrawer(); return; }
+    if (document.getElementById('fundatorsDrawer').classList.contains('open')) { closeFundatorsDrawer(); return; }
     const drawer = document.getElementById('drawer');
     if (drawer.classList.contains('open')) toggleDrawer();
     else if (document.getElementById('photoOverlay').classList.contains('open')) closePhoto();
