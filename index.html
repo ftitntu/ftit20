@@ -2139,7 +2139,11 @@ function openPdf(src, name) {
     openPhoto(name);
     return;
   }
-  document.getElementById('pdfFrame').src = src;
+  // Для файлів з raw.githubusercontent.com використовуємо Google Docs Viewer
+  const viewerSrc = src.startsWith('https://raw.githubusercontent.com')
+    ? 'https://docs.google.com/viewer?embedded=true&url=' + encodeURIComponent(src)
+    : src;
+  document.getElementById('pdfFrame').src = viewerSrc;
   document.getElementById('pdfModalName').textContent = name;
   document.getElementById('pdfModalDl').href = src;
   document.getElementById('pdfOverlay').classList.add('open');
