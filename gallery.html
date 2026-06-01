@@ -10,26 +10,26 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --deep:     #d6e8f5;
-    --navy:     #eef6fc;
-    --navy-mid: #c8ddf2;
-    --blue:     #1d4ed8;
-    --electric: #1d4ed8;
-    --sky:      #1e5fa8;
-    --yellow:   #d97706;
-    --white:    #0f172a;
-    --muted:    #475569;
-    --border:   rgba(29,78,216,0.15);
-    --border2:  rgba(29,78,216,0.28);
-    --bg:       #d6e8f5;
-    --surface:  #eef6fc;
-    --surface2: #c8ddf2;
-    --text:     #0f172a;
-    --text2:    #334155;
-    --text3:    rgba(51,65,85,0.55);
-    --accent:   #1d4ed8;
-    --accent2:  #1e5fa8;
-    --nav-bg:   #162044;
+    --deep:     #d4e6f4;
+    --navy:     #e2eff8;
+    --navy-mid: #c2d8ee;
+    --blue:     #4a9fd4;
+    --electric: #4a9fd4;
+    --sky:      #3a8fc4;
+    --yellow:   #e8a030;
+    --white:    #0d1e30;
+    --muted:    #4a6a88;
+    --border:   rgba(74,159,212,0.18);
+    --border2:  rgba(74,159,212,0.32);
+    --bg:       #d4e6f4;
+    --surface:  #e2eff8;
+    --surface2: #c2d8ee;
+    --text:     #0d1e30;
+    --text2:    #1e3a52;
+    --text3:    rgba(30,58,82,0.55);
+    --accent:   #4a9fd4;
+    --accent2:  #3a8fc4;
+    --nav-bg:   #0d1a2e;
     --font-display: 'Unbounded', sans-serif;
     --font-body:    'Geologica', sans-serif;
   }
@@ -101,7 +101,7 @@
     font-family: var(--font-display);
     font-size: 4rem;
     font-weight: 900;
-    background: linear-gradient(135deg, #1e5fa8, #1d4ed8);
+    background: linear-gradient(135deg, #2a7ab4, #4a9fd4);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -120,7 +120,7 @@
     position: sticky;
     top: 0;
     z-index: 50;
-    background: rgba(214,232,245,0.94);
+    background: rgba(212,230,244,0.94);
     backdrop-filter: blur(16px);
     border-bottom: 1px solid var(--border);
   }
@@ -154,8 +154,8 @@
   }
   .dept-btn:hover { color: var(--text2); }
   .dept-btn.active {
-    color: #b45309;
-    border-bottom-color: #b45309;
+    color: #e8a030;
+    border-bottom-color: #e8a030;
     font-weight: 500;
   }
 
@@ -244,7 +244,7 @@
     font-family: var(--font-display);
     font-size: 2.0rem;
     font-weight: 700;
-    background: linear-gradient(135deg, #1e5fa8, #1d4ed8);
+    background: linear-gradient(135deg, #2a7ab4, #4a9fd4);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -264,12 +264,12 @@
     font-weight: 400;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: #92400e;
+    color: #9a5a10;
     padding: 4px 12px;
-    border: 1px solid rgba(180,83,9,0.3);
+    border: 1px solid rgba(232,160,48,0.3);
     border-radius: 2em;
     white-space: nowrap;
-    background: rgba(217,119,6,0.08);
+    background: rgba(232,160,48,0.08);
   }
 
   /* PHOTO GRID */
@@ -326,7 +326,7 @@
   }
   .caption-dept {
     font-size: 10px;
-    color: #92400e;
+    color: #9a5a10;
     opacity: 0.8;
     flex-shrink: 0;
     font-family: var(--font-display);
@@ -409,14 +409,14 @@
     font-family: var(--font-display);
     font-size: 1rem;
     font-weight: 600;
-    color: #0f172a;
+    color: #0d1e30;
     margin-bottom: 4px;
     letter-spacing: 0.02em;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-  .lb-sub { font-size: 13px; color: rgba(51,65,85,0.6); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .lb-sub { font-size: 13px; color: rgba(30,58,82,0.6); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .lb-controls {
     display: flex;
     align-items: center;
@@ -426,16 +426,16 @@
   }
   .lb-btn {
     width: 40px; height: 40px;
-    border: 1px solid rgba(29,78,216,0.2);
-    background: rgba(29,78,216,0.07);
-    color: #334155;
+    border: 1px solid rgba(74,159,212,0.2);
+    background: rgba(74,159,212,0.07);
+    color: #1e3a52;
     border-radius: 8px;
     cursor: pointer;
     font-size: 16px;
     display: flex; align-items: center; justify-content: center;
     transition: background 0.2s, color 0.2s, border-color 0.2s;
   }
-  .lb-btn:hover { background: rgba(29,78,216,0.15); color: #0f172a; border-color: rgba(29,78,216,0.4); }
+  .lb-btn:hover { background: rgba(74,159,212,0.15); color: #0d1e30; border-color: rgba(74,159,212,0.4); }
   .lb-btn:disabled { opacity: 0.25; cursor: default; }
   .lb-counter { font-size: 12px; color: var(--text3); min-width: 40px; text-align: center; }
 
@@ -580,9 +580,9 @@
     margin-top: 28px;
     padding: 12px 22px;
     background: transparent;
-    border: 1px solid rgba(29,78,216,0.35);
+    border: 1px solid rgba(74,159,212,0.35);
     border-radius: 6px;
-    color: #1d4ed8;
+    color: #4a9fd4;
     font-family: var(--font-display);
     font-size: 0.65rem;
     font-weight: 400;
@@ -597,13 +597,13 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, rgba(29,78,216,0.08), rgba(30,95,168,0.05));
+    background: linear-gradient(135deg, rgba(74,159,212,0.08), rgba(58,143,196,0.05));
     opacity: 0;
     transition: opacity 0.25s;
   }
   .slideshow-btn:hover::before { opacity: 1; }
   .slideshow-btn:hover {
-    border-color: #1d4ed8;
+    border-color: #4a9fd4;
     transform: translateY(-1px);
   }
   .slideshow-btn svg {
@@ -730,7 +730,7 @@
     bottom: 0;
     left: 0;
     height: 2px;
-    background: linear-gradient(90deg, #1d4ed8, #2563eb);
+    background: linear-gradient(90deg, #3a8fc4, #5ab0e4);
     z-index: 11;
     transition: none;
   }
@@ -791,14 +791,14 @@
 </head>
 <body>
 
-<div id="prog" style="position:fixed;top:0;left:0;height:2px;width:0%;background:linear-gradient(90deg,#1d4ed8,#2563eb,#d97706);z-index:10000;transition:width .1s linear;"></div>
+<div id="prog" style="position:fixed;top:0;left:0;height:2px;width:0%;background:linear-gradient(90deg,#3a8fc4,#5ab0e4,#a8c8e8);z-index:10000;transition:width .1s linear;"></div>
 
-<nav style="position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:center;padding:1rem 2.5rem;background:#162044;backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.06);transition:background .3s;" id="gal-nav">
-  <a href="index.html" style="font-family:var(--font-display);font-size:.65rem;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:#94a3b8;text-decoration:none;display:flex;align-items:center;gap:.6rem;transition:color .2s;" onmouseover="this.style.color='#ffffff'" onmouseout="this.style.color='#94a3b8'">
+<nav style="position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:center;padding:1rem 2.5rem;background:#0d1a2e;backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.06);transition:background .3s;" id="gal-nav">
+  <a href="index.html" style="font-family:var(--font-display);font-size:.65rem;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:#7a9ab8;text-decoration:none;display:flex;align-items:center;gap:.6rem;transition:color .2s;" onmouseover="this.style.color='#ffffff'" onmouseout="this.style.color='#7a9ab8'">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
     Повернутись
   </a>
-  <span style="margin-left:auto;font-family:var(--font-display);font-size:.65rem;letter-spacing:.15em;color:#29aaff;">ФТІТ · Фотогалерея</span>
+  <span style="margin-left:auto;font-family:var(--font-display);font-size:.65rem;letter-spacing:.15em;color:#a8c8e8;">ФТІТ · Фотогалерея</span>
 </nav>
 
 <div class="hero" style="padding-top:110px;">
@@ -1113,7 +1113,7 @@ window.addEventListener('scroll', () => {
   const h = document.documentElement;
   prog.style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight) * 100) + '%';
   const s = window.scrollY > 60;
-  galNav.style.background     = s ? '#162044' : '#162044';
+  galNav.style.background     = s ? '#0d1a2e' : '#0d1a2e';
 
   galNav.style.backdropFilter = s ? 'blur(16px)'         : 'blur(0px)';
   galNav.style.borderBottom   = s ? '1px solid rgba(41,170,255,0.18)' : '1px solid rgba(255,255,255,0.06)';
@@ -1303,9 +1303,9 @@ function render() {
 function showLoading() {
   document.getElementById('timeline').innerHTML = `
     <div style="text-align:center;padding:5rem 2rem;display:flex;flex-direction:column;align-items:center;gap:1rem;">
-      <div style="width:36px;height:36px;border-radius:50%;border:2px solid rgba(29,78,216,.15);border-top-color:#1d4ed8;animation:spin .8s linear infinite;"></div>
+      <div style="width:36px;height:36px;border-radius:50%;border:2px solid rgba(74,159,212,.15);border-top-color:#4a9fd4;animation:spin .8s linear infinite;"></div>
       <div style="font-family:'Unbounded',sans-serif;font-size:.85rem;color:#fff;">Завантаження фото...</div>
-      <div style="font-size:.78rem;color:#475569;">Отримуємо фото з GitHub</div>
+      <div style="font-size:.78rem;color:#4a6a88;">Отримуємо фото з GitHub</div>
     </div>`;
 }
 function showEmpty() {
@@ -1313,7 +1313,7 @@ function showEmpty() {
     <div style="text-align:center;padding:5rem 2rem;">
       <div style="font-size:2.5rem;margin-bottom:1rem;">🖼</div>
       <div style="font-family:'Unbounded',sans-serif;font-size:.85rem;color:#fff;margin-bottom:.5rem;">Фото поки немає</div>
-      <div style="font-size:.78rem;color:#475569;">Додай фото у підпапки Photo/КафедраXXX/ у форматі Рік_Назва.jpg</div>
+      <div style="font-size:.78rem;color:#4a6a88;">Додай фото у підпапки Photo/КафедраXXX/ у форматі Рік_Назва.jpg</div>
     </div>`;
 }
 function showError(msg) {
@@ -1321,7 +1321,7 @@ function showError(msg) {
     <div style="text-align:center;padding:5rem 2rem;">
       <div style="font-size:2.5rem;margin-bottom:1rem;">⚠️</div>
       <div style="font-family:'Unbounded',sans-serif;font-size:.85rem;color:#fff;margin-bottom:.5rem;">Не вдалося завантажити</div>
-      <div style="font-size:.78rem;color:#475569;">${msg}</div>
+      <div style="font-size:.78rem;color:#4a6a88;">${msg}</div>
     </div>`;
 }
 
