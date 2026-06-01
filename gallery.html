@@ -196,9 +196,9 @@
   .sort-btn svg { transition: transform 0.25s ease; }
 
   .year-btn {
-    padding: 12px 16px;
+    padding: 12px 14px;
     font-family: var(--font-body);
-    font-size: 13px;
+    font-size: 11px;
     font-weight: 400;
     color: var(--text3);
     background: transparent;
@@ -322,11 +322,6 @@
     font-weight: 400;
     color: var(--text2);
     line-height: 1.5;
-  }
-  .caption-year {
-    font-size: 11px;
-    color: var(--text3);
-    flex-shrink: 0;
   }
   .caption-dept {
     font-size: 10px;
@@ -757,7 +752,7 @@ function getYearsFor(dept) {
 }
 
 function getDepts() {
-  return [...new Set(allPhotos.map(p => p.dept))].sort();
+  return [...new Set(allPhotos.map(p => p.dept))].filter(d => d !== 'Інше').sort();
 }
 
 // ── побудова навігацій ──
@@ -859,7 +854,7 @@ function render() {
         </div>
         <div class="photo-caption">
           <span class="caption-title">${ph.title || '—'}</span>
-          ${showDept ? `<span class="caption-dept">${deptTag(ph.dept)}</span>` : `<span class="caption-year">${yr}</span>`}
+          ${ph.dept !== 'Інше' ? `<span class="caption-dept">${deptTag(ph.dept)}</span>` : ''}
         </div>
       `;
       item.onclick = () => openLb(globalIdx);
