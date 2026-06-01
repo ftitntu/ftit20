@@ -570,6 +570,222 @@
   @keyframes spin {
     to { transform: rotate(360deg); }
   }
+
+  /* SLIDESHOW BUTTON */
+  .slideshow-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 28px;
+    padding: 12px 22px;
+    background: transparent;
+    border: 1px solid var(--border2);
+    border-radius: 6px;
+    color: var(--electric);
+    font-family: var(--font-display);
+    font-size: 0.65rem;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.25s, border-color 0.25s, color 0.25s, transform 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .slideshow-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(41,170,255,0.08), rgba(125,212,252,0.05));
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+  .slideshow-btn:hover::before { opacity: 1; }
+  .slideshow-btn:hover {
+    border-color: var(--electric);
+    transform: translateY(-1px);
+  }
+  .slideshow-btn svg {
+    transition: transform 0.3s;
+  }
+  .slideshow-btn:hover svg {
+    transform: scale(1.15);
+  }
+
+  /* SLIDESHOW OVERLAY */
+  .slideshow-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 500;
+    background: #000;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .slideshow-overlay.ss-open { display: flex; }
+
+  .ss-img-wrap {
+    position: absolute;
+    top: 90px;      /* below controls bar */
+    left: 0;
+    right: 0;
+    bottom: 110px;  /* above info bar */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .ss-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    opacity: 0;
+    transition: opacity 1s ease;
+    user-select: none;
+    pointer-events: none;
+  }
+  .ss-img-wrap img.ss-visible {
+    opacity: 1;
+  }
+
+  /* dim vignette */
+  .ss-vignette {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.55) 100%);
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  /* bottom info bar */
+  .ss-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    padding: 40px 48px 36px;
+    background: linear-gradient(to top, rgba(0,0,0,0.82) 0%, transparent 100%);
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+    opacity: 0;
+    transition: opacity 0.5s ease 0.4s;
+  }
+  .ss-info.ss-info-visible { opacity: 1; }
+
+  .ss-meta { min-width: 0; }
+  .ss-year {
+    font-family: var(--font-display);
+    font-size: 0.7rem;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--electric);
+    margin-bottom: 6px;
+  }
+  .ss-title {
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 2vw, 1.4rem);
+    font-weight: 600;
+    color: var(--white);
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 60vw;
+  }
+  .ss-dept {
+    margin-top: 5px;
+    font-size: 12px;
+    color: rgba(245,197,24,0.7);
+    font-family: var(--font-display);
+    letter-spacing: 0.06em;
+  }
+
+  .ss-counter {
+    font-family: var(--font-display);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: rgba(255,255,255,0.35);
+    white-space: nowrap;
+    flex-shrink: 0;
+    text-align: right;
+  }
+  .ss-progress-num {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: rgba(255,255,255,0.6);
+    letter-spacing: -0.02em;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  /* progress bar */
+  .ss-progress-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--electric), var(--sky));
+    z-index: 11;
+    transition: none;
+  }
+
+  /* top controls */
+  .ss-top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    padding: 52px 32px 28px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.72) 0%, transparent 100%);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .ss-logo {
+    font-family: var(--font-display);
+    font-size: 0.6rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+  }
+  .ss-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .ss-ctrl-btn {
+    width: 40px; height: 40px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.65);
+    cursor: pointer;
+    font-size: 15px;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s, color 0.2s;
+    backdrop-filter: blur(8px);
+  }
+  .ss-ctrl-btn:hover {
+    background: rgba(255,255,255,0.14);
+    color: var(--white);
+  }
+  .ss-ctrl-btn.ss-paused svg.play { display: block; }
+  .ss-ctrl-btn.ss-paused svg.pause { display: none; }
+  .ss-ctrl-btn svg.play { display: none; }
+  .ss-ctrl-btn svg.pause { display: block; }
+
+  @media(max-width: 640px) {
+    .ss-info { padding: 32px 20px 28px; }
+    .ss-top  { padding: 16px 16px; }
+    .ss-title { max-width: 80vw; font-size: 1rem; }
+  }
 </style>
 </head>
 <body>
@@ -589,6 +805,12 @@
     <div class="hero-eyebrow">Фотогалерея</div>
     <h1 class="hero-title">Двадцять<br>років <em>разом</em></h1>
     <p class="hero-subtitle">Архів моментів, подій і людей, які створили факультет таким, яким він є сьогодні.</p>
+    <button class="slideshow-btn" id="slideshow-start-btn" onclick="startSlideshow()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+        <polygon points="5 3 19 12 5 21 5 3"/>
+      </svg>
+      Запустити слайд-шоу
+    </button>
   </div>
   <div class="hero-right">
     <div class="hero-stat" id="total-count">—</div>
@@ -639,6 +861,215 @@
     <div class="lb-swipe-hint">← свайп →</div>
   </div>
 </div>
+
+<!-- SLIDESHOW OVERLAY -->
+<div class="slideshow-overlay" id="ss-overlay">
+  <div class="ss-vignette"></div>
+
+  <!-- Image A (double-buffer for crossfade) -->
+  <div class="ss-img-wrap" id="ss-layer-a">
+    <img id="ss-img-a" src="" alt="">
+  </div>
+  <!-- Image B -->
+  <div class="ss-img-wrap" id="ss-layer-b">
+    <img id="ss-img-b" src="" alt="">
+  </div>
+
+  <!-- top bar -->
+  <div class="ss-top">
+    <span class="ss-logo">ФТІТ · Фотогалерея</span>
+    <div class="ss-controls">
+      <!-- prev -->
+      <button class="ss-ctrl-btn" id="ss-prev-btn" title="Попереднє">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <!-- play/pause -->
+      <button class="ss-ctrl-btn" id="ss-pause-btn" title="Пауза / Продовжити">
+        <svg class="pause" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+        <svg class="play"  width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      </button>
+      <!-- next -->
+      <button class="ss-ctrl-btn" id="ss-next-btn" title="Наступне">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+      <!-- close -->
+      <button class="ss-ctrl-btn" id="ss-close-btn" title="Закрити (Esc)" style="margin-left:8px;">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- bottom info -->
+  <div class="ss-info" id="ss-info">
+    <div class="ss-meta">
+      <div class="ss-year" id="ss-year"></div>
+      <div class="ss-title" id="ss-title"></div>
+      <div class="ss-dept" id="ss-dept"></div>
+    </div>
+    <div class="ss-counter">
+      <span class="ss-progress-num" id="ss-num"></span>
+      <span id="ss-total"></span>
+    </div>
+  </div>
+
+  <!-- progress bar -->
+  <div class="ss-progress-bar" id="ss-progress-bar"></div>
+</div>
+
+<script>
+// ══ SLIDESHOW ══
+const SS_DURATION = 4000; // ms per photo
+
+let ssPhotos    = [];   // sorted by year asc
+let ssIndex     = 0;
+let ssTimer     = null;
+let ssProgTimer = null;
+let ssPaused    = false;
+let ssActiveLayer = 'a'; // which layer is currently visible
+
+const ssOverlay  = document.getElementById('ss-overlay');
+const ssImgA     = document.getElementById('ss-img-a');
+const ssImgB     = document.getElementById('ss-img-b');
+const ssInfoEl   = document.getElementById('ss-info');
+const ssYearEl   = document.getElementById('ss-year');
+const ssTitleEl  = document.getElementById('ss-title');
+const ssDeptEl   = document.getElementById('ss-dept');
+const ssNumEl    = document.getElementById('ss-num');
+const ssTotalEl  = document.getElementById('ss-total');
+const ssProgBar  = document.getElementById('ss-progress-bar');
+const ssPauseBtn = document.getElementById('ss-pause-btn');
+
+function buildSsPhotos() {
+  // всі фото відсортовані від найстаріших до найновіших
+  return [...allPhotos].sort((a, b) => (a.year || 9999) - (b.year || 9999));
+}
+
+function startSlideshow() {
+  if (!allPhotos.length) return;
+  ssPhotos = buildSsPhotos();
+  ssIndex  = 0;
+  ssPaused = false;
+  ssActiveLayer = 'a';
+
+  ssPauseBtn.classList.remove('ss-paused');
+
+  // скидаємо обидва шари
+  ssImgA.classList.remove('ss-visible');
+  ssImgB.classList.remove('ss-visible');
+
+  ssOverlay.classList.add('ss-open');
+  document.body.style.overflow = 'hidden';
+
+  ssTotalEl.textContent = '/ ' + ssPhotos.length;
+
+  showSsPhoto(0, true);
+  scheduleSsNext();
+}
+
+function closeSlideshowFn() {
+  ssOverlay.classList.remove('ss-open');
+  document.body.style.overflow = '';
+  clearTimeout(ssTimer);
+  cancelAnimationFrame(ssProgTimer);
+  ssProgBar.style.width = '0%';
+  ssProgBar.style.transition = 'none';
+}
+
+function showSsPhoto(idx, instant) {
+  const ph = ssPhotos[idx];
+  if (!ph) return;
+
+  ssYearEl.textContent  = ph.year || 'Рік невідомий';
+  ssTitleEl.textContent = ph.title || '—';
+  ssDeptEl.textContent  = ph.dept !== 'Інше' ? deptTag(ph.dept) : '';
+  ssNumEl.textContent   = (idx + 1);
+
+  // hide info briefly
+  ssInfoEl.classList.remove('ss-info-visible');
+
+  const incoming = ssActiveLayer === 'a' ? ssImgB : ssImgA;
+  const outgoing = ssActiveLayer === 'a' ? ssImgA : ssImgB;
+
+  incoming.src = ph.url;
+
+  if (instant) {
+    ssImgA.classList.remove('ss-visible');
+    ssImgB.classList.remove('ss-visible');
+    ssImgA.src = ph.url;
+    ssActiveLayer = 'a';
+    ssImgA.onload = () => {
+      ssImgA.classList.add('ss-visible');
+      setTimeout(() => ssInfoEl.classList.add('ss-info-visible'), 200);
+    };
+    return;
+  }
+
+  incoming.onload = () => {
+    incoming.classList.add('ss-visible');
+    setTimeout(() => {
+      outgoing.classList.remove('ss-visible');
+      ssInfoEl.classList.add('ss-info-visible');
+    }, 600);
+    ssActiveLayer = ssActiveLayer === 'a' ? 'b' : 'a';
+  };
+}
+
+function scheduleSsNext() {
+  clearTimeout(ssTimer);
+  cancelAnimationFrame(ssProgTimer);
+  ssProgBar.style.transition = 'none';
+  ssProgBar.style.width = '0%';
+
+  if (ssPaused) return;
+
+  const start = performance.now();
+  function animProg(now) {
+    const elapsed = now - start;
+    const pct = Math.min((elapsed / SS_DURATION) * 100, 100);
+    ssProgBar.style.width = pct + '%';
+    if (pct < 100) {
+      ssProgTimer = requestAnimationFrame(animProg);
+    }
+  }
+  ssProgTimer = requestAnimationFrame(animProg);
+
+  ssTimer = setTimeout(() => {
+    if (!ssPaused) advanceSs(1);
+  }, SS_DURATION);
+}
+
+function advanceSs(dir) {
+  ssIndex = (ssIndex + dir + ssPhotos.length) % ssPhotos.length;
+  showSsPhoto(ssIndex, false);
+  scheduleSsNext();
+}
+
+function toggleSsPause() {
+  ssPaused = !ssPaused;
+  ssPauseBtn.classList.toggle('ss-paused', ssPaused);
+  if (!ssPaused) {
+    scheduleSsNext();
+  } else {
+    clearTimeout(ssTimer);
+    cancelAnimationFrame(ssProgTimer);
+  }
+}
+
+// controls
+document.getElementById('ss-close-btn').onclick = closeSlideshowFn;
+document.getElementById('ss-pause-btn').onclick  = toggleSsPause;
+document.getElementById('ss-prev-btn').onclick   = () => { advanceSs(-1); };
+document.getElementById('ss-next-btn').onclick   = () => { advanceSs(1);  };
+
+// keyboard
+document.addEventListener('keydown', e => {
+  if (!ssOverlay.classList.contains('ss-open')) return;
+  if (e.key === 'Escape')       closeSlideshowFn();
+  if (e.key === 'ArrowRight')   advanceSs(1);
+  if (e.key === 'ArrowLeft')    advanceSs(-1);
+  if (e.key === ' ')            { e.preventDefault(); toggleSsPause(); }
+});
+</script>
 
 <script>
 // ══ КОНФІГ GITHUB ══
