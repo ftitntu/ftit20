@@ -1,5 +1,12 @@
 [
   {
+    "dept": "Деканат",
+    "base": "https://raw.githubusercontent.com/ftitntu/ftit20/main/Photo/Деканат",
+    "files": [
+      "2025_Працівники деканату ФТІТ.jpg"
+    ]
+  },
+  {
     "dept": "Кафедра ІАД та ІБ",
     "base": "https://raw.githubusercontent.com/ftitntu/ftit20/main/Photo/Кафедра ІАД та ІБ",
     "files": [
