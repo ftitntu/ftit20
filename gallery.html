@@ -1152,6 +1152,11 @@ async function load() {
   }
 }
 
+function capitalize(str) {
+  if (!str) return str;
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 function processPhotos(deptData) {
   // Збираємо всі фото з усіх кафедр, групуємо по (dept, year)
   ALL_DATA = [];
@@ -1161,10 +1166,10 @@ function processPhotos(deptData) {
     files.forEach(f => {
       const match = f.name.match(/^(\d{4})[_\s-]/);
       const year  = match ? parseInt(match[1]) : 0;
-      const title = f.name
+      const title = capitalize(f.name
         .replace(/^\d{4}[_\s-]/, '')
         .replace(/\.[^.]+$/, '')
-        .trim();
+        .trim());
       const url = `${base}/${encodeURIComponent(f.name)}`;
       allPhotos.push({ title, url, year, dept });
     });
