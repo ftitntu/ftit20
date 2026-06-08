@@ -1434,6 +1434,131 @@ footer{
     gap:1.2rem;
   }
 }
+
+/* ══ STANDS MODAL ══ */
+.stands-overlay{
+  position:fixed;inset:0;z-index:2000;
+  background:rgba(6,14,31,.85);backdrop-filter:blur(10px);
+  display:flex;align-items:flex-start;justify-content:center;
+  padding:2rem 1rem;
+  overflow-y:auto;
+  opacity:0;pointer-events:none;
+  transition:opacity .3s ease;
+}
+.stands-overlay.open{opacity:1;pointer-events:all;}
+
+.stands-modal{
+  background:var(--navy);
+  border:1px solid var(--border);
+  border-radius:20px;
+  width:100%;max-width:860px;
+  overflow:hidden;
+  transform:translateY(24px);
+  transition:transform .35s cubic-bezier(.22,1,.36,1);
+  box-shadow:0 40px 100px rgba(0,0,0,.6);
+}
+.stands-overlay.open .stands-modal{transform:translateY(0);}
+
+.stands-modal-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.2rem 1.8rem;
+  border-bottom:1px solid var(--border);
+  background:rgba(255,255,255,.02);
+  position:sticky;top:0;z-index:10;
+  backdrop-filter:blur(12px);
+}
+.stands-modal-title{
+  display:flex;align-items:center;gap:.75rem;
+}
+.stands-modal-icon{font-size:1.3rem;}
+.stands-modal-name{
+  font-family:'Unbounded',sans-serif;
+  font-size:.85rem;font-weight:700;color:var(--white);
+}
+.stands-modal-sub{font-size:.7rem;color:var(--muted);margin-top:.15rem;}
+.stands-modal-close{
+  width:32px;height:32px;border-radius:50%;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+  color:var(--muted);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .2s,color .2s;flex-shrink:0;
+}
+.stands-modal-close:hover{background:rgba(255,255,255,.12);color:var(--white);}
+
+.stands-modal-body{padding:2.5rem 2rem 3rem;}
+
+.stands-sec-tag{
+  text-align:center;
+  font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--electric);
+  display:flex;align-items:center;justify-content:center;gap:.7rem;
+  margin-bottom:2.5rem;
+}
+.stands-sec-tag::before,.stands-sec-tag::after{
+  content:'';height:1px;width:32px;background:rgba(41,170,255,.35);
+}
+
+/* Stand card inside modal */
+.smc{
+  display:flex;gap:2.5rem;align-items:center;
+  opacity:0;transform:translateY(40px);
+  transition:opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1);
+}
+.smc.vis{opacity:1;transform:translateY(0);}
+.smc:nth-child(even){flex-direction:row-reverse;}
+
+.smc-img-wrap{
+  flex:1;min-width:0;
+  border-radius:12px;overflow:hidden;
+  border:1px solid rgba(41,170,255,.15);
+  box-shadow:0 16px 48px rgba(0,0,0,.5);
+  position:relative;
+}
+.smc-img-wrap::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(41,170,255,.05),transparent 60%);
+  pointer-events:none;
+}
+.smc-img-wrap img{width:100%;height:auto;display:block;}
+
+.smc-info{
+  flex:0 0 200px;
+  display:flex;flex-direction:column;gap:.85rem;
+}
+.smc-num{
+  font-family:'Unbounded',sans-serif;
+  font-size:3rem;font-weight:900;
+  color:rgba(41,170,255,.12);
+  line-height:1;letter-spacing:-.03em;
+}
+.smc-name{
+  font-family:'Unbounded',sans-serif;
+  font-size:.9rem;font-weight:700;color:var(--white);
+}
+.smc-desc{font-size:.78rem;color:var(--muted);line-height:1.65;}
+.smc-dl{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--electric);font-family:'Geologica',sans-serif;
+  padding:.4em .9em;border-radius:30px;
+  border:1px solid rgba(41,170,255,.2);
+  background:rgba(41,170,255,.06);
+  width:fit-content;text-decoration:none;
+  transition:background .2s,border-color .2s;
+}
+.smc-dl:hover{background:rgba(41,170,255,.14);border-color:rgba(41,170,255,.4);}
+
+.smc-divider{
+  height:1px;
+  background:linear-gradient(90deg,transparent,rgba(41,170,255,.15),transparent);
+  margin:2.5rem 0;
+}
+
+@media(max-width:640px){
+  .smc,.smc:nth-child(even){flex-direction:column;}
+  .smc-info{flex:none;}
+  .stands-modal-body{padding:1.5rem 1rem 2rem;}
+}
 </style>
 </head>
 <body>
@@ -1843,11 +1968,11 @@ footer{
         <div class="doc-desc">Офіційні подяки партнерам і друзям факультету.</div>
         <span class="doc-status"><span class="doc-status-dot"></span>Готується</span>
       </div>
-      <div class="doc-card">
+      <div class="doc-card" onclick="openStandsModal()" style="cursor:pointer;">
         <div class="doc-icon">🖼️</div>
         <div class="doc-title">Електронні стенди</div>
         <div class="doc-desc">Візуальні матеріали «ФТІТ — 20 років» для розміщення та поширення.</div>
-        <span class="doc-status"><span class="doc-status-dot"></span>Готується</span>
+        <span class="doc-status ready"><span class="doc-status-dot"></span>Переглянути</span>
       </div>
     </div>
   </div>
@@ -2065,6 +2190,74 @@ footer{
       </button>
     </div>
     <div class="photo-counter" id="photoCounter"></div>
+  </div>
+</div>
+
+<!-- STANDS MODAL -->
+<div class="stands-overlay" id="standsOverlay" onclick="handleStandsOverlayClick(event)">
+  <div class="stands-modal" id="standsModal">
+    <div class="stands-modal-header">
+      <div class="stands-modal-title">
+        <div class="stands-modal-icon">🖼️</div>
+        <div>
+          <div class="stands-modal-name">Електронні стенди</div>
+          <div class="stands-modal-sub">ФТІТ · 20 років · Банери</div>
+        </div>
+      </div>
+      <button class="stands-modal-close" onclick="closeStandsModal()" aria-label="Закрити">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="stands-modal-body">
+      <div class="stands-sec-tag">Електронні стенди — Усі три банери</div>
+
+      <div class="smc" id="smc1">
+        <div class="smc-img-wrap">
+          <img src="https://raw.githubusercontent.com/ftitntu/ftit20/main/Docs/Stand/stand1.jpg" alt="Стенд 1" loading="lazy">
+        </div>
+        <div class="smc-info">
+          <div class="smc-num">01</div>
+          <div class="smc-name">Стенд №&nbsp;1</div>
+          <div class="smc-desc">Горизонтальний банер «ФТІТ — 20 років». Підходить для екранів і соціальних мереж.</div>
+          <a class="smc-dl" href="https://raw.githubusercontent.com/ftitntu/ftit20/main/Docs/Stand/stand1.jpg" download target="_blank">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Завантажити
+          </a>
+        </div>
+      </div>
+      <div class="smc-divider"></div>
+
+      <div class="smc" id="smc2">
+        <div class="smc-img-wrap">
+          <img src="https://raw.githubusercontent.com/ftitntu/ftit20/main/Docs/Stand/stand2.jpg" alt="Стенд 2" loading="lazy">
+        </div>
+        <div class="smc-info">
+          <div class="smc-num">02</div>
+          <div class="smc-name">Стенд №&nbsp;2</div>
+          <div class="smc-desc">Другий варіант банера з альтернативним компонуванням та кольоровою схемою.</div>
+          <a class="smc-dl" href="https://raw.githubusercontent.com/ftitntu/ftit20/main/Docs/Stand/stand2.jpg" download target="_blank">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Завантажити
+          </a>
+        </div>
+      </div>
+      <div class="smc-divider"></div>
+
+      <div class="smc" id="smc3">
+        <div class="smc-img-wrap">
+          <img src="https://raw.githubusercontent.com/ftitntu/ftit20/main/Docs/Stand/stand3.jpg" alt="Стенд 3" loading="lazy">
+        </div>
+        <div class="smc-info">
+          <div class="smc-num">03</div>
+          <div class="smc-name">Стенд №&nbsp;3</div>
+          <div class="smc-desc">Третій варіант — фінальний банер із повним набором ювілейної символіки.</div>
+          <a class="smc-dl" href="https://raw.githubusercontent.com/ftitntu/ftit20/main/Docs/Stand/stand3.jpg" download target="_blank">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Завантажити
+          </a>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -2402,6 +2595,7 @@ document.addEventListener('keydown', e => {
     const drawer = document.getElementById('drawer');
     if (drawer.classList.contains('open')) toggleDrawer();
     else if (document.getElementById('photoOverlay').classList.contains('open')) closePhoto();
+    else if (document.getElementById('standsOverlay').classList.contains('open')) closeStandsModal();
     else closePdf();
   }
   if (document.getElementById('photoOverlay').classList.contains('open')) {
@@ -2486,6 +2680,29 @@ async function loadMainGallery() {
     // залишаємо grid порожнім — не критично для сторінки
   }
 }
+// ══ STANDS MODAL ══
+function openStandsModal() {
+  document.getElementById('standsOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  // Trigger scroll-reveal animations with staggered delay
+  setTimeout(() => {
+    const cards = document.querySelectorAll('.smc');
+    const smcObs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('vis'); });
+    }, {threshold:0.1, root: document.querySelector('.stands-modal-body')});
+    cards.forEach(c => { c.classList.remove('vis'); smcObs.observe(c); });
+    // fallback: reveal all after short delay in case IntersectionObserver misses
+    cards.forEach((c, i) => setTimeout(() => c.classList.add('vis'), 100 + i * 180));
+  }, 50);
+}
+function closeStandsModal() {
+  document.getElementById('standsOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function handleStandsOverlayClick(e) {
+  if (e.target === document.getElementById('standsOverlay')) closeStandsModal();
+}
+
 loadMainGallery();
 
 </script>
