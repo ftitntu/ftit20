@@ -514,40 +514,58 @@ section{padding:7rem 2rem;}
   margin:2.5rem auto 0;
 }
 .review-card{
-  display:flex;align-items:center;gap:1.1rem;
-  background:var(--navy-mid);
-  border:1px solid var(--border);
-  border-radius:16px;
-  padding:1.4rem 1.6rem;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:1rem;
+  border-radius:20px;
+  padding:2.5rem 1.5rem;
   text-decoration:none;
   transition:border-color .25s,transform .25s,box-shadow .25s;
-  text-align:left;
+  text-align:center;
 }
-.review-card:hover{
-  border-color:rgba(41,170,255,.35);
+.review-card.partners{
+  background:rgba(41,170,255,.08);
+  border:1px solid rgba(41,170,255,.25);
+}
+.review-card.alumni{
+  background:rgba(245,197,24,.08);
+  border:1px solid rgba(245,197,24,.25);
+}
+.review-card.partners:hover{
+  border-color:rgba(41,170,255,.5);
   transform:translateY(-3px);
-  box-shadow:0 12px 40px rgba(0,0,0,.3);
+  box-shadow:0 12px 40px rgba(41,170,255,.1);
+}
+.review-card.alumni:hover{
+  border-color:rgba(245,197,24,.5);
+  transform:translateY(-3px);
+  box-shadow:0 12px 40px rgba(245,197,24,.1);
 }
 .review-card-icon{
-  font-size:2rem;flex-shrink:0;
-  filter:drop-shadow(0 0 10px rgba(41,170,255,.3));
+  font-size:2.5rem;line-height:1;
 }
-.review-card-body{flex:1;min-width:0;}
+.review-card-body{width:100%;}
 .review-card-title{
   font-family:'Unbounded',sans-serif;
-  font-size:.8rem;font-weight:700;
-  color:var(--white);letter-spacing:.02em;
-  margin-bottom:.3rem;
+  font-size:.85rem;font-weight:700;
+  letter-spacing:.02em;
+  line-height:1.4;
+  margin-bottom:.4rem;
 }
+.review-card.partners .review-card-title{color:var(--electric);}
+.review-card.alumni .review-card-title{color:var(--yellow);}
 .review-card-desc{
-  font-size:.75rem;color:var(--muted);line-height:1.5;
+  font-size:.72rem;color:var(--muted);line-height:1.5;
 }
 .review-card-arrow{
-  width:18px;height:18px;flex-shrink:0;
-  color:var(--electric);opacity:.5;
+  width:32px;height:32px;flex-shrink:0;
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
   transition:opacity .2s,transform .2s;
+  margin-top:.25rem;
 }
-.review-card:hover .review-card-arrow{opacity:1;transform:translateX(3px);}
+.review-card.partners .review-card-arrow{background:rgba(41,170,255,.15);color:var(--electric);}
+.review-card.alumni .review-card-arrow{background:rgba(245,197,24,.15);color:var(--yellow);}
+.review-card:hover .review-card-arrow{transform:translateX(3px);}
 
 @media(max-width:600px){
   .reviews-cta{grid-template-columns:1fr;}
@@ -2046,28 +2064,33 @@ footer{
   <div class="container">
     <div class="congrats-inner reveal">
       <div class="congrats-icon">🎊</div>
-      <div class="sec-tag" style="justify-content:center;">Вітання</div>
-      <h2 class="sec-title">Привітання від <em>колег</em> та <span class="yellow">випускників</span></h2>
-      <p class="congrats-text">
-        Слова подяки, підтримки й натхнення від студентів, випускників, а також наших дорогих колег і партнерів.
-      </p>
+      <h2 class="sec-title">Привітання від</h2>
     </div>
     <div class="reviews-cta reveal">
-      <a href="review_uni.html" class="review-card">
+      <a href="review_uni.html" class="review-card partners">
+        <div class="review-card-icon">🤝</div>
         <div class="review-card-body">
-          <div class="review-card-title">Від партнерів та друзів</div>
-          <div class="review-card-desc"></div>
+          <div class="review-card-title">Партнерів<br>та друзів</div>
+          <div class="review-card-desc">Колеги, організації, партнери</div>
         </div>
-        <svg class="review-card-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        <div class="review-card-arrow">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
       </a>
-      <a href="review_stud.html" class="review-card">
+      <a href="review_stud.html" class="review-card alumni">
+        <div class="review-card-icon">🎓</div>
         <div class="review-card-body">
-          <div class="review-card-title">Від випускників</div>
-          <div class="review-card-desc"></div>
+          <div class="review-card-title">Випускників<br>ФТІТ</div>
+          <div class="review-card-desc">Наша гордість та спадщина</div>
         </div>
-        <svg class="review-card-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        <div class="review-card-arrow">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
       </a>
     </div>
+    <p class="congrats-text reveal" style="margin-top:2rem;">
+      Слова подяки, підтримки й натхнення від наших дорогих колег, партнерів та випускників.
+    </p>
   </div>
 </section>
 
