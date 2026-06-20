@@ -835,10 +835,10 @@
   <div class="year-nav-wrap">
     <div class="year-nav" id="year-nav"></div>
     <button class="sort-btn" id="sort-btn" title="Сортування по роках">
-      <svg id="sort-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <svg id="sort-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transform: rotate(180deg);">
         <line x1="12" y1="5" x2="12" y2="19"/><polyline points="5 12 12 5 19 12"/>
       </svg>
-      <span id="sort-label">старіші</span>
+      <span id="sort-label">новіші</span>
     </button>
   </div>
 </div>
@@ -1122,7 +1122,7 @@ let allPhotos    = [];
 let currentPhotos= [];
 let activeDept   = 'all';
 let activeYear   = 'all';
-let sortAsc      = true; // true = старіші спочатку, false = новіші спочатку
+let sortAsc      = false; // true = старіші спочатку, false = новіші спочатку
 let lbIndex      = 0;
 
 // ── прогрес + nav ──
