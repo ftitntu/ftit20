@@ -1106,6 +1106,16 @@ function deptTag(dept) {
   return '#' + (DEPT_TAG[dept] || dept.replace(/\s+/g, ''));
 }
 
+// ── бажаний порядок кафедр у фільтрі ──
+const DEPT_ORDER = [
+  'Кафедра ІАД та ІБ',
+  'Кафедра ІСТ',
+  'Кафедра ВМ',
+  'Кафедра МП та МК',
+  'Кафедра ТС та БДР',
+  'Кафедра ТТ',
+];
+
 // ── стан ──
 let ALL_DATA     = []; // [{ dept, year, photos:[{title,url,dept}] }]
 let allPhotos    = [];
@@ -1199,7 +1209,10 @@ function getYearsFor(dept) {
 }
 
 function getDepts() {
-  return [...new Set(allPhotos.map(p => p.dept))].filter(d => d !== 'Інше').sort();
+  const present = [...new Set(allPhotos.map(p => p.dept))].filter(d => d !== 'Інше');
+  const known = DEPT_ORDER.filter(d => present.includes(d));
+  const unknown = present.filter(d => !DEPT_ORDER.includes(d)).sort();
+  return [...known, ...unknown];
 }
 
 // ── побудова навігацій ──
